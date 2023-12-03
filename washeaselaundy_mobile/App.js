@@ -11,6 +11,16 @@ import UserAccount from "./src/screens/User/Account";
 import UserChangePassword from "./src/screens/User/ChangePassword";
 import UserAccountInformation from "./src/screens/User/AccountInformation";
 import UserNotification from "./src/screens/User/Notification";
+import UserTransactionModes from "./src/screens/User/TransactionModes";
+import UserServices from "./src/screens/User/Services";
+import UserAdditionalServices from "./src/screens/User/AdditionalServices";
+import UserCart from "./src/screens/User/Cart";
+import UserAddCartItem from "./src/screens/User/AddCartItem";
+import UserCheckout from "./src/screens/User/Checkout";
+import UserTransactionHistory from "./src/screens/User/TransactionHistory";
+import UserCartHistory from "./src/screens/User/CartHistory";
+import UserTransactionItemsHistory from "./src/screens/User/TransactionItemsHistory";
+import UserFeedback from "./src/screens/User/Feedback";
 
 import RiderTabNavigator from "./src/navigator/RiderTabNavigator";
 import RiderLogin from "./src/screens/Rider/Login";
@@ -35,6 +45,19 @@ import StaffAddInventory from "./src/screens/Staff/AddInventory";
 import StaffAddDropoffDelivery from "./src/screens/Staff/AddDropoffDelivery";
 import StaffAddSelfService from "./src/screens/Staff/AddSelfService";
 import StaffAddPickupDelivery from "./src/screens/Staff/AddPickupDelivery";
+import StaffAddTransaction from "./src/screens/Staff/AddTransaction";
+import StaffEditTransaction from "./src/screens/Staff/EditTransaction";
+import StaffViewTransaction from "./src/screens/Staff/ViewTransaction";
+import StaffTransactionModes from "./src/screens/Staff/TransactionModes";
+import StaffServices from "./src/screens/Staff/Services";
+import StaffAdditionalServices from "./src/screens/Staff/AdditionalServices";
+import StaffAddTransactionItem from "./src/screens/Staff/AddTransactionItem";
+import StaffCheckout from "./src/screens/Staff/Checkout";
+import StaffEditTransactionItem from "./src/screens/Staff/EditTransactionItem";
+import StaffEditMachineStatus from "./src/screens/Staff/EditMachineStatus";
+import StaffTransactions from "./src/screens/Staff/Transactions";
+import StaffViewInventory from "./src/screens/Staff/ViewInventory";
+import StaffEditInventory from "./src/screens/Staff/EditInventory";
 
 import ShopAdminTabNavigator from "./src/navigator/ShopAdminTabNavigator";
 import ShopAdminLogin from "./src/screens/ShopAdmin/Login";
@@ -53,6 +76,13 @@ import ShopAdminAddStaff from "./src/screens/ShopAdmin/AddStaff";
 import ShopAdminAddMachine from "./src/screens/ShopAdmin/AddMachine";
 import ShopAdminAddLaundryService from "./src/screens/ShopAdmin/AddLaundryService";
 import ShopAdminSubscription from "./src/screens/ShopAdmin/Subscription";
+import ShopAdminEditStaff from "./src/screens/ShopAdmin/EditStaff";
+import ShopAdminViewStaff from "./src/screens/ShopAdmin/ViewStaff";
+import ShopAdminEditRider from "./src/screens/ShopAdmin/EditRider";
+import ShopAdminViewRider from "./src/screens/ShopAdmin/ViewRider";
+import ShopAdminEditMachine from "./src/screens/ShopAdmin/EditMachine";
+import ShopAdminViewMachine from "./src/screens/ShopAdmin/ViewMachine";
+import ShopAdminPickSubscription from "./src/screens/ShopAdmin/PickSubscription";
 
 import SuperAdminTabNavigator from "./src/navigator/SuperAdminTabNavigator";
 import SuperAdminLogin from "./src/screens/SuperAdmin/Login";
@@ -92,6 +122,28 @@ function AppNavigator() {
           component={UserAccountInformation}
         />
         <Stack.Screen name="User Notification" component={UserNotification} />
+        <Stack.Screen
+          name="User Transaction Modes"
+          component={UserTransactionModes}
+        />
+        <Stack.Screen name="User Services" component={UserServices} />
+        <Stack.Screen
+          name="User Additional Services"
+          component={UserAdditionalServices}
+        />
+        <Stack.Screen name="User Cart" component={UserCart} />
+        <Stack.Screen name="User Add Cart Item" component={UserAddCartItem} />
+        <Stack.Screen name="User Checkout" component={UserCheckout} />
+        <Stack.Screen
+          name="User Transaction History"
+          component={UserTransactionHistory}
+        />
+        <Stack.Screen name="User Cart History" component={UserCartHistory} />
+        <Stack.Screen
+          name="User Transaction Items History"
+          component={UserTransactionItemsHistory}
+        />
+        <Stack.Screen name="User Feedback" component={UserFeedback} />
         {/* Rider */}
         <Stack.Screen
           name="Rider Tab Navigator"
@@ -154,6 +206,49 @@ function AppNavigator() {
           name="Staff Add Pickup and Delivery"
           component={StaffAddPickupDelivery}
         />
+        <Stack.Screen
+          name="Staff Add Transaction"
+          component={StaffAddTransaction}
+        />
+        <Stack.Screen
+          name="Staff Edit Transaction"
+          component={StaffEditTransaction}
+        />
+        <Stack.Screen
+          name="Staff View Transaction"
+          component={StaffViewTransaction}
+        />
+        <Stack.Screen
+          name="Staff Transaction Modes"
+          component={StaffTransactionModes}
+        />
+        <Stack.Screen name="Staff Services" component={StaffServices} />
+        <Stack.Screen
+          name="Staff Additional Services"
+          component={StaffAdditionalServices}
+        />
+        <Stack.Screen
+          name="Staff Add Transaction Item"
+          component={StaffAddTransactionItem}
+        />
+        <Stack.Screen name="Staff Checkout" component={StaffCheckout} />
+        <Stack.Screen
+          name="Staff Edit Transaction Item"
+          component={StaffEditTransactionItem}
+        />
+        <Stack.Screen
+          name="Staff Edit Machine Status"
+          component={StaffEditMachineStatus}
+        />
+        <Stack.Screen name="Staff Transactions" component={StaffTransactions} />
+        <Stack.Screen
+          name="Staff View Inventory"
+          component={StaffViewInventory}
+        />
+        <Stack.Screen
+          name="Staff Edit Inventory"
+          component={StaffEditInventory}
+        />
         {/* Shop Admin */}
         <Stack.Screen
           name="Shop Admin Tab Navigator"
@@ -211,6 +306,34 @@ function AppNavigator() {
         <Stack.Screen
           name="Shop Admin Subscription"
           component={ShopAdminSubscription}
+        />
+        <Stack.Screen
+          name="Shop Admin Edit Staff"
+          component={ShopAdminEditStaff}
+        />
+        <Stack.Screen
+          name="Shop Admin View Staff"
+          component={ShopAdminViewStaff}
+        />
+        <Stack.Screen
+          name="Shop Admin Edit Rider"
+          component={ShopAdminEditRider}
+        />
+        <Stack.Screen
+          name="Shop Admin View Rider"
+          component={ShopAdminViewRider}
+        />
+        <Stack.Screen
+          name="Shop Admin Edit Machine"
+          component={ShopAdminEditMachine}
+        />
+        <Stack.Screen
+          name="Shop Admin View Machine"
+          component={ShopAdminViewMachine}
+        />
+        <Stack.Screen
+          name="Shop Admin Pick Subscription"
+          component={ShopAdminPickSubscription}
         />
         {/* Super Admin */}
         <Stack.Screen

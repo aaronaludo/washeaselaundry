@@ -1,7 +1,40 @@
+import React, { useState, useEffect } from "react";
 import { StyleSheet, Text, View, Image, TouchableOpacity } from "react-native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import axios from "axios";
 import { Feather } from "@expo/vector-icons";
 
 export default function Account({ navigation }) {
+  const handleLogout = async () => {
+    try {
+      const token = await AsyncStorage.getItem("shopAdminToken");
+
+      if (token) {
+        const response = await axios.get(
+          "http://192.168.1.2:8000/api/shop_admins/logout",
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+
+        if (response.data.message === "Successfully logged out") {
+          await AsyncStorage.removeItem("shopAdminToken");
+          await AsyncStorage.removeItem("shopAdminData");
+
+          navigation.navigate("Shop Admin Login");
+        } else {
+          console.error("Logout failed:", response.data.message);
+        }
+      } else {
+        console.error("No authentication token found");
+      }
+    } catch (error) {
+      console.error("Logout failed:", error);
+    }
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.imageContainer}>
@@ -46,10 +79,7 @@ export default function Account({ navigation }) {
             <Feather name="arrow-right-circle" size={24} color="black" />
           </View>
         </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.buttonContainer}
-          onPress={() => navigation.navigate("Shop Admin Login")}
-        >
+        <TouchableOpacity style={styles.buttonContainer} onPress={handleLogout}>
           <View style={styles.titleContainer}>
             <View style={{ flexDirection: "row" }}>
               <Feather

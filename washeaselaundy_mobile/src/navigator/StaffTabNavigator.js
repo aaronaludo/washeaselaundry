@@ -2,6 +2,7 @@ import React from "react";
 import { Text, TouchableOpacity } from "react-native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import Dashboard from "../screens/Staff/Dashboard";
+// import Transactions from "../screens/Staff/Transactions";
 import Manage from "../screens/Staff/Manage";
 import Notification from "../screens/Staff/Notification";
 import { Feather } from "@expo/vector-icons";
@@ -49,6 +50,19 @@ export default function App({ navigation }) {
           ),
         }}
       />
+      {/* <Tab.Screen
+        name="Transactions"
+        component={Transactions}
+        options={{
+          tabBarIcon: ({ color, size, focused }) => (
+            <Feather
+              name="columns"
+              size={24}
+              color={focused ? "#0d6efd" : "grey"}
+            />
+          ),
+        }}
+      /> */}
       <Tab.Screen
         name="Notification"
         component={Notification}

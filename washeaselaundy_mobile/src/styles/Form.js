@@ -38,6 +38,7 @@ export const styles = StyleSheet.create({
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
     elevation: 5,
+    borderWidth: 0,
   },
   inputButton: {
     backgroundColor: "#0c68ee",

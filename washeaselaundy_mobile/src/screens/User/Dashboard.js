@@ -1,73 +1,79 @@
-// import React from "react";
-// import Box from "../../components/Box";
-// import { styles } from "../../styles/Box";
-// import { ScrollView } from "react-native";
+import React, { useState, useEffect } from "react";
+import { ScrollView, StyleSheet, View, TouchableOpacity } from "react-native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { Card, Title, Paragraph } from "react-native-paper";
+import axios from "axios";
 
-// const Dashboard = ({ navigation }) => {
-//   return (
-//     <ScrollView>
-//       <Box
-//         container={styles.container}
-//         title={styles.title}
-//         description={styles.description}
-//         titleLabel="Welcome, User"
-//         descriptionLabel="juanrobert@mail.com"
-//       />
-//     </ScrollView>
-//   );
-// };
+const Dashboard = ({ navigation }) => {
+  const [shopAdmins, setShopAdmins] = useState([]);
 
-// export default Dashboard;
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const token = await AsyncStorage.getItem("customerToken");
 
-// CardList.js
-import React from "react";
-import { FlatList, StyleSheet, View } from "react-native";
-import CardItem from "../../components/CardItem";
+        const response = await axios.get(
+          "http://192.168.1.2:8000/api/customers/shop_admins",
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
 
-const data = [
-  {
-    id: "1",
-    title: "Card 1",
-    description: "Description for Card 1",
-    imageUrl: "https://example.com/image1.jpg",
-  },
-  {
-    id: "2",
-    title: "Card 2",
-    description: "Description for Card 2",
-    imageUrl: "https://example.com/image2.jpg",
-  },
-  // Add more card data as needed
-];
+        setShopAdmins(response.data.shop_admins);
+      } catch (error) {
+        console.log(error);
+      }
+    };
 
-const CardList = () => {
-  const renderItem = ({ item }) => (
-    <CardItem
-      title={item.title}
-      description={item.description}
-      imageUrl={item.imageUrl}
-    />
-  );
+    fetchData(); // Call the async function
+  }, []);
 
   return (
-    <View style={styles.container}>
-      <FlatList
-        data={data}
-        renderItem={renderItem}
-        keyExtractor={(item) => item.id}
-        numColumns={2} // Set the number of columns to 2
-      />
-    </View>
+    <ScrollView>
+      <View style={styles2.container}>
+        {shopAdmins.map((item) => (
+          <Card style={styles2.card} key={item.id}>
+            <TouchableOpacity
+              onPress={() =>
+                navigation.navigate("User Transaction Modes", {
+                  shop_admin_id: item.id,
+                })
+              }
+            >
+              <Card.Cover
+                source={require("../../../assets/images/bg.png")}
+                style={styles2.cardImage}
+              />
+              <Card.Content>
+                <Title>{item.first_name + " " + item.last_name}</Title>
+                <Paragraph>{item.address}</Paragraph>
+                <Paragraph>{item.phone_number}</Paragraph>
+                <Paragraph>{item.email}</Paragraph>
+              </Card.Content>
+            </TouchableOpacity>
+          </Card>
+        ))}
+      </View>
+    </ScrollView>
   );
 };
 
-const styles = StyleSheet.create({
+const styles2 = StyleSheet.create({
   container: {
     flexDirection: "row",
     flexWrap: "wrap",
     justifyContent: "space-between",
-    padding: 16,
+    padding: 18,
+  },
+  card: {
+    width: "48%",
+    marginBottom: 16,
+  },
+  cardImage: {
+    height: 150,
   },
 });
 
-export default CardList;
+export default Dashboard;

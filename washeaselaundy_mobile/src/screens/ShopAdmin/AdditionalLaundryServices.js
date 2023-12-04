@@ -12,9 +12,11 @@ import {
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from "axios";
 
-const LaundryServices = ({ navigation, route }) => {
+const AdditionalLaundryServices = ({ navigation, route }) => {
   const { result } = route.params;
-  const [laundryServices, setLaundryServices] = useState([]);
+  const [additionalLaundryServices, setAdditionalLaundryServices] = useState(
+    []
+  );
   const [render, setRender] = useState(null);
 
   useEffect(() => {
@@ -23,7 +25,7 @@ const LaundryServices = ({ navigation, route }) => {
         const token = await AsyncStorage.getItem("shopAdminToken");
 
         const response = await axios.get(
-          "http://192.168.1.2:8000/api/shop_admins/services",
+          "http://192.168.1.2:8000/api/shop_admins/additional-services",
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -31,9 +33,8 @@ const LaundryServices = ({ navigation, route }) => {
           }
         );
 
-        // console.log(response.data.services);
-        setLaundryServices(response.data.services);
-        // setStaffs(response.data.staffs);
+        // console.log(response.data);
+        setAdditionalLaundryServices(response.data.response);
       } catch (error) {
         console.log(error);
       }
@@ -47,7 +48,7 @@ const LaundryServices = ({ navigation, route }) => {
       const token = await AsyncStorage.getItem("shopAdminToken");
 
       const response = await axios.delete(
-        `http://192.168.1.2:8000/api/shop_admins/services/${id}`,
+        `http://192.168.1.2:8000/api/shop_admins/additional-services/${id}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -68,46 +69,38 @@ const LaundryServices = ({ navigation, route }) => {
         container={styles.container}
         title={styles.title}
         description={styles.description}
-        titleLabel="Add Laundry Service"
-        descriptionLabel="add more laundry service for the better."
+        titleLabel="Add Additional Laundry Service"
+        descriptionLabel="add more additional laundry service for the better."
         navigation={navigation}
         buttonContainer={styles.buttonContainer}
         buttonText={styles.buttonText}
         buttonTextLabel={"Add"}
-        buttonNavigation={"Shop Admin Add Laundry Service"}
+        buttonNavigation={"Shop Admin Add Additional Laundry Service"}
       />
-      {/* <View style={styles.container}>
-        <Text style={styles.title}>Search</Text>
-        <TextInput
-          style={styles2.input}
-          placeholder="Search by Name"
-          secureTextEntry
-        />
-        {navigation && (
-          <TouchableOpacity style={styles.buttonContainer}>
-            <Text style={styles.buttonText}>Search</Text>
-          </TouchableOpacity>
-        )}
-      </View> */}
       <View style={styles2.table}>
         <View style={styles2.headerRow}>
           <Text style={styles2.headerCell}>ID</Text>
           <Text style={styles2.headerCell}>Name</Text>
           <Text style={styles2.headerCell}>Price</Text>
+          <Text style={styles2.headerCell}>Service</Text>
           <Text style={styles2.headerCell}>Actions</Text>
         </View>
-        {laundryServices.map((item) => (
+        {additionalLaundryServices.map((item) => (
           <View style={styles2.row} key={item.id}>
             <Text style={styles2.cell}>{item.id}</Text>
             <Text style={styles2.cell}>{item.name}</Text>
             <Text style={styles2.cell}>{item.price}</Text>
+            <Text style={styles2.cell}>{item.service.name}</Text>
             <View style={styles2.cell}>
               <TouchableOpacity
                 style={styles2.button}
                 onPress={() =>
-                  navigation.navigate("Shop Admin View Laundry Service", {
-                    service_id: item.id,
-                  })
+                  navigation.navigate(
+                    "Shop Admin View Additional Laundry Service",
+                    {
+                      additional_service_id: item.id,
+                    }
+                  )
                 }
               >
                 <Text style={styles2.buttonText}>View</Text>
@@ -115,9 +108,12 @@ const LaundryServices = ({ navigation, route }) => {
               <TouchableOpacity
                 style={styles2.button}
                 onPress={() =>
-                  navigation.navigate("Shop Admin Edit Laundry Service", {
-                    service_id: item.id,
-                  })
+                  navigation.navigate(
+                    "Shop Admin Edit Additional Laundry Service",
+                    {
+                      additional_service_id: item.id,
+                    }
+                  )
                 }
               >
                 <Text style={styles2.buttonText}>Edit</Text>
@@ -200,4 +196,4 @@ const styles2 = StyleSheet.create({
   },
 });
 
-export default LaundryServices;
+export default AdditionalLaundryServices;

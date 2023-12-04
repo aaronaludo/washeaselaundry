@@ -1,5 +1,5 @@
 import React from "react";
-import { Text, TouchableOpacity } from "react-native";
+import { Text, TouchableOpacity, Image } from "react-native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import Dashboard from "../screens/Staff/Dashboard";
 // import Transactions from "../screens/Staff/Transactions";
@@ -19,6 +19,21 @@ export default function App({ navigation }) {
             style={{ marginRight: 15 }}
           >
             <Feather name="user" size={24} color="black" />
+          </TouchableOpacity>
+        ),
+        headerLeft: () => (
+          <TouchableOpacity
+            onPress={() => navigation.navigate("Rider Account")}
+            style={{ marginLeft: 15 }}
+          >
+            <Image
+              source={require("../../assets/images/logo.jpg")}
+              style={{
+                width: 30,
+                height: 30,
+                borderRadius: 30,
+              }}
+            />
           </TouchableOpacity>
         ),
         tabBarActiveTintColor: "#0d6efd",

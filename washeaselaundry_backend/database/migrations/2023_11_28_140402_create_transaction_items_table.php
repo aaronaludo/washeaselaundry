@@ -20,8 +20,8 @@ return new class extends Migration
             $table->integer('machine_id')->nullable()->default(0);
             $table->integer('status_id');
             $table->string('name');
-            $table->integer('quantity');
-            $table->integer('weight');
+            $table->string('quantity');
+            $table->string('weight');
         });
     }
 

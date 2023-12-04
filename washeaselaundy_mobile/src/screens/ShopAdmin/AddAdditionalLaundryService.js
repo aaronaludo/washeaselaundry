@@ -1,14 +1,46 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { View, Text, TextInput, TouchableOpacity } from "react-native";
 import { styles } from "../../styles/Form";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import DropDownPicker from "react-native-dropdown-picker";
 import axios from "axios";
 
-const AddLaundryService = ({ navigation }) => {
+const AddAdditionalLaundryService = ({ navigation }) => {
   const [error, setError] = useState("");
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [price, setPrice] = useState("");
+  const [open, setOpen] = useState(false);
+  const [service, setService] = useState("");
+  const [services, setServices] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const token = await AsyncStorage.getItem("shopAdminToken");
+
+        const response = await axios.get(
+          "http://192.168.1.2:8000/api/shop_admins/services",
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+
+        setServices(
+          response.data.services.map((item) => ({
+            label: item.name,
+            value: item.id,
+          }))
+        );
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    fetchData();
+  }, []);
 
   const handleSubmit = async () => {
     setError("");
@@ -16,11 +48,12 @@ const AddLaundryService = ({ navigation }) => {
       const token = await AsyncStorage.getItem("shopAdminToken");
 
       const response = await axios.post(
-        "http://192.168.1.2:8000/api/shop_admins/services/add",
+        "http://192.168.1.2:8000/api/shop_admins/additional-services/add",
         {
           name: name,
           description: description,
           price: price,
+          service_id: service,
         },
         {
           headers: {
@@ -28,9 +61,7 @@ const AddLaundryService = ({ navigation }) => {
           },
         }
       );
-
-      // console.log(response.data.message);
-      navigation.navigate("Shop Admin Laundry Services", {
+      navigation.navigate("Shop Admin Additional Laundry Services", {
         result: response.data.message,
       });
     } catch (error) {
@@ -41,7 +72,7 @@ const AddLaundryService = ({ navigation }) => {
   return (
     <>
       <View style={styles.container}>
-        <Text style={styles.title}>Add Laundry Service</Text>
+        <Text style={styles.title}>Add Additional Laundry Service</Text>
         {error !== "" && (
           <Text style={[styles.description, { color: "red" }]}>{error}</Text>
         )}
@@ -64,6 +95,14 @@ const AddLaundryService = ({ navigation }) => {
           value={price}
           onChangeText={(text) => setPrice(text)}
         />
+        <DropDownPicker
+          open={open}
+          value={service}
+          items={services}
+          setOpen={setOpen}
+          setValue={setService}
+          setItems={setServices}
+        />
         <TouchableOpacity style={styles.inputButton} onPress={handleSubmit}>
           <Text style={styles.inputButtonText}>Submit</Text>
         </TouchableOpacity>
@@ -72,4 +111,4 @@ const AddLaundryService = ({ navigation }) => {
   );
 };
 
-export default AddLaundryService;
+export default AddAdditionalLaundryService;

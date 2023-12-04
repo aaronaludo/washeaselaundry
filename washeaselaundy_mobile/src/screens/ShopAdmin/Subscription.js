@@ -14,7 +14,7 @@ const Subscription = ({ navigation, route }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [passwordConfirmation, setPasswordConfirmation] = useState("");
-  const [paymentScreenshot, setPaymentScreenshot] = useState("");
+  // const [paymentScreenshot, setPaymentScreenshot] = useState("");
   const [error, setError] = useState("");
 
   useEffect(() => {
@@ -42,7 +42,7 @@ const Subscription = ({ navigation, route }) => {
           password: password,
           password_confirmation: passwordConfirmation,
           subscription_id: subscription_id,
-          payment_screenshot: paymentScreenshot,
+          payment_screenshot: "null",
         }
       );
 
@@ -110,12 +110,12 @@ const Subscription = ({ navigation, route }) => {
           onChangeText={(text) => setPasswordConfirmation(text)}
           secureTextEntry
         />
-        <TextInput
+        {/* <TextInput
           style={styles.input}
           placeholder="Payment Screenshot"
           value={paymentScreenshot}
           onChangeText={(text) => setPaymentScreenshot(text)}
-        />
+        /> */}
         <TouchableOpacity style={styles.inputButton} onPress={handleRegister}>
           <Text style={styles.inputButtonText}>Register</Text>
         </TouchableOpacity>

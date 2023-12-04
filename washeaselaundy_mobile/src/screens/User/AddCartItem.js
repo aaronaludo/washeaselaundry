@@ -25,6 +25,19 @@ const AddCartItems = ({ route, navigation }) => {
       : route.params.additional_service_id
   );
 
+  const {
+    transaction_mode_id,
+    shop_admin_id,
+    service_id,
+    additional_service_id,
+  } = route.params;
+
+  console.log(
+    transaction_mode_id,
+    shop_admin_id,
+    service_id,
+    additional_service_id
+  );
   const handleAddItem = async () => {
     try {
       const token = await AsyncStorage.getItem("customerToken");

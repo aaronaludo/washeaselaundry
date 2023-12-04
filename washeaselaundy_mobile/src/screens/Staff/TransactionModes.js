@@ -5,8 +5,6 @@ import { Card, Title, Paragraph } from "react-native-paper";
 const TransactionMode = ({ navigation, route }) => {
   const { shop_admin_id } = route.params;
 
-  // console.log(shop_admin_id);
-
   return (
     <ScrollView>
       <View style={styles2.container}>

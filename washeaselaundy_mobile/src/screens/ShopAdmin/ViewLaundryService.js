@@ -4,44 +4,40 @@ import { Text, View } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from "axios";
 
-const ViewStaff = ({ route }) => {
-  const { staff_id } = route.params;
-  const [staff, setStaff] = useState({});
+const ViewLaundryService = ({ route }) => {
+  const { service_id } = route.params;
+  const [services, setServices] = useState({});
 
   useEffect(() => {
-    const fetchData = async () => {
+    const fetchService = async () => {
       try {
         const token = await AsyncStorage.getItem("shopAdminToken");
 
         const response = await axios.get(
-          `http://192.168.1.2:8000/api/shop_admins/staffs/${staff_id}`,
+          `http://192.168.1.2:8000/api/shop_admins/services/${service_id}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
             },
           }
         );
-
-        setStaff(response.data.staff);
+        setServices(response.data.service);
       } catch (error) {
         console.log(error);
       }
     };
 
-    fetchData();
+    fetchService();
   }, []);
 
-  // console.log(staff_id);
+  // console.log(service_id);
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>
-        {staff.first_name + " " + staff.last_name}
-      </Text>
-      <Text style={styles.description}>{staff.address}</Text>
-      <Text style={styles.description}>{staff.phone_number}</Text>
-      <Text style={styles.description}>{staff.email}</Text>
+      <Text style={styles.title}>{services.name}</Text>
+      <Text style={styles.description}>{services.description}</Text>
+      <Text style={styles.description}>{services.price} pesos</Text>
     </View>
   );
 };
 
-export default ViewStaff;
+export default ViewLaundryService;

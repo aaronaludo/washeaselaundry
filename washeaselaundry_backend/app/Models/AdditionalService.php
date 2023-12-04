@@ -10,4 +10,8 @@ class AdditionalService extends Model
     use HasFactory;
 
     public $timestamps = false;
+
+    public function service(){
+        return $this->belongsTo(Service::class);
+    }
 }

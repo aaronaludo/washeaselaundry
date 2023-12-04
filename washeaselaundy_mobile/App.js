@@ -84,6 +84,14 @@ import ShopAdminEditMachine from "./src/screens/ShopAdmin/EditMachine";
 import ShopAdminViewMachine from "./src/screens/ShopAdmin/ViewMachine";
 import ShopAdminPickSubscription from "./src/screens/ShopAdmin/PickSubscription";
 
+import ShopAdminEditLaundryService from "./src/screens/ShopAdmin/EditLaundryService";
+import ShopAdminViewLaundryService from "./src/screens/ShopAdmin/ViewLaundryService";
+
+import ShopAdminAdditionalLaundryServices from "./src/screens/ShopAdmin/AdditionalLaundryServices";
+import ShopAdminAddAdditionalLaundryService from "./src/screens/ShopAdmin/AddAdditionalLaundryService";
+import ShopAdminEditAdditionalLaundryService from "./src/screens/ShopAdmin/EditAdditionalLaundryService";
+import ShopAdminViewAdditionalLaundryService from "./src/screens/ShopAdmin/ViewAdditionalLaundryService";
+
 import SuperAdminTabNavigator from "./src/navigator/SuperAdminTabNavigator";
 import SuperAdminLogin from "./src/screens/SuperAdmin/Login";
 import SuperAdminDashboard from "./src/screens/SuperAdmin/Dashboard";
@@ -334,6 +342,31 @@ function AppNavigator() {
         <Stack.Screen
           name="Shop Admin Pick Subscription"
           component={ShopAdminPickSubscription}
+        />
+
+        <Stack.Screen
+          name="Shop Admin Edit Laundry Service"
+          component={ShopAdminEditLaundryService}
+        />
+        <Stack.Screen
+          name="Shop Admin View Laundry Service"
+          component={ShopAdminViewLaundryService}
+        />
+        <Stack.Screen
+          name="Shop Admin Additional Laundry Services"
+          component={ShopAdminAdditionalLaundryServices}
+        />
+        <Stack.Screen
+          name="Shop Admin Add Additional Laundry Service"
+          component={ShopAdminAddAdditionalLaundryService}
+        />
+        <Stack.Screen
+          name="Shop Admin Edit Additional Laundry Service"
+          component={ShopAdminEditAdditionalLaundryService}
+        />
+        <Stack.Screen
+          name="Shop Admin View Additional Laundry Service"
+          component={ShopAdminViewAdditionalLaundryService}
         />
         {/* Super Admin */}
         <Stack.Screen

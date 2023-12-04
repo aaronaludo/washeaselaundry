@@ -14,7 +14,7 @@ const Checkout = ({ route, navigation }) => {
   const [time, setTime] = useState("");
   const [specialInstruction, setSpecialInstruction] = useState("");
   const [paymentMethod, setPaymentMethod] = useState("");
-  const [paymentScreenshot, setPaymentScreenshot] = useState("");
+  // const [paymentScreenshot, setPaymentScreenshot] = useState("");
   const [open, setOpen] = useState(false);
   const [items, setItems] = useState([
     { label: "Cash", value: "1" },
@@ -35,7 +35,7 @@ const Checkout = ({ route, navigation }) => {
           time: time,
           special_instruction: specialInstruction,
           payment_method_id: paymentMethod,
-          payment_screenshot: paymentScreenshot,
+          payment_screenshot: "null",
         },
         {
           headers: {
@@ -97,12 +97,12 @@ const Checkout = ({ route, navigation }) => {
           setValue={setPaymentMethod}
           setItems={setItems}
         />
-        <TextInput
+        {/* <TextInput
           style={styles.input}
           placeholder="Enter payment screenshot"
           value={paymentScreenshot}
           onChangeText={(text) => setPaymentScreenshot(text)}
-        />
+        /> */}
         <TouchableOpacity style={styles.inputButton} onPress={handleCheckout}>
           <Text style={styles.inputButtonText}>Confirm Information</Text>
         </TouchableOpacity>

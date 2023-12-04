@@ -19,8 +19,8 @@ return new class extends Migration
             $table->integer('service_id');
             $table->integer('additional_service_id')->nullable();
             $table->string('name');
-            $table->integer('quantity');
-            $table->integer('weight');
+            $table->string('quantity');
+            $table->string('weight');
             $table->timestamps();
         });
     }

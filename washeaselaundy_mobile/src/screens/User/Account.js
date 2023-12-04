@@ -6,6 +6,9 @@ import { Feather } from "@expo/vector-icons";
 
 export default function Account({ navigation }) {
   const handleLogout = async () => {
+    // await AsyncStorage.removeItem("customerToken");
+    // await AsyncStorage.removeItem("customerData");
+    // navigation.navigate("User Login");
     try {
       const token = await AsyncStorage.getItem("customerToken");
       if (token) {

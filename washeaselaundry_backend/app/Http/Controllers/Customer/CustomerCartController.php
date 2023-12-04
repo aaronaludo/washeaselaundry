@@ -74,41 +74,6 @@ class CustomerCartController extends Controller
         return response()->json(['message' => 'Successfully add cart items ' . $cart_item->id]);
     }
 
-    // public function add(Request $request){
-    //     $user = User::find(auth()->user()->id);
-
-    //     $request->validate([
-    //         'item.*.transaction_mode_id' => 'required',
-    //         'item.*.shop_admin_id' => 'required',
-    //         'item.*.service_id' => 'required',
-    //         'item.*.name' => 'required',
-    //         'item.*.quantity' => 'required',
-    //         'item.*.weight' => 'required',
-    //     ]);
-
-    //     if ($user->role_id != 1) {
-    //         return response()->json(['message' => 'Customer account only'], 401);
-    //     }
-
-    //     foreach ($request->item as $req) {
-    //         $cart_item = new CartItem();
-    //         $cart_item->customer_id = $user->id;
-    //         $cart_item->transaction_mode_id = $req['transaction_mode_id'];
-    //         $cart_item->shop_admin_id = $req['shop_admin_id'];
-    //         $cart_item->service_id = $req['service_id'];
-    //         $cart_item->name = $req['name'];
-    //         $cart_item->quantity = $req['quantity'];
-    //         $cart_item->weight = $req['weight'];
-
-    //         // Assuming additional_service_id is optional
-    //         $cart_item->additional_service_id = $req['additional_service_id'] ?? null;
-
-    //         $cart_item->save();
-    //     }
-
-    //     return response()->json(['message' => 'Successfully add cart items ' . $cart_item->id]);
-    // }
-
     public function delete($id){
         $user = User::find(auth()->user()->id);
 

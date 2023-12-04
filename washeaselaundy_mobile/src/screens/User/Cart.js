@@ -15,12 +15,18 @@ import { styles as style3 } from "../../styles/Form";
 const Cart = ({ route, navigation }) => {
   const [shopAdmins, setShopAdmins] = useState([]);
   const [cartItems, setCartItems] = useState([]);
+  const [render, setRender] = useState(null);
   const {
     transaction_mode_id,
     shop_admin_id,
     service_id,
     additional_service_id,
+    price,
   } = route.params;
+  console.log(
+    cartItems.reduce((sum, item) => sum + parseInt(item.quantity), 0)
+  );
+  console.log(cartItems);
 
   useEffect(() => {
     const fetchShopAdmins = async () => {
@@ -67,23 +73,23 @@ const Cart = ({ route, navigation }) => {
 
     fetchShopAdmins();
     fetchCartItems();
-  }, [route.params.result]);
+  }, [route.params.result, render]);
 
-  const handleAddItem = async () => {
+  const handleDelete = async (id) => {
     try {
       const token = await AsyncStorage.getItem("customerToken");
 
-      const response = await axios.post(
-        "http://192.168.1.2:8000/api/customers/cart/add",
-        {
-          item: cartItems,
-        },
+      const response = await axios.delete(
+        `http://192.168.1.2:8000/api/customers/cart/${id}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
           },
         }
       );
+
+      setRender(response);
+      // console.log(response);
     } catch (error) {
       console.log(error);
     }
@@ -145,6 +151,12 @@ const Cart = ({ route, navigation }) => {
                   ? item.additional_service
                   : item.additional_service.name}
               </Paragraph>
+              <TouchableOpacity
+                style={styles.buttonContainer}
+                onPress={() => handleDelete(item.id)}
+              >
+                <Text style={styles.buttonText}>Delete</Text>
+              </TouchableOpacity>
             </Card.Content>
           </Card>
         ))}
@@ -154,6 +166,11 @@ const Cart = ({ route, navigation }) => {
             onPress={() =>
               navigation.navigate("User Checkout", {
                 shop_admin_id: shop_admin_id,
+                price:
+                  cartItems.reduce(
+                    (sum, item) => sum + parseInt(item.quantity),
+                    0
+                  ) * parseInt(price),
               })
             }
           >

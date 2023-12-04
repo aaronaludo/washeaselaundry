@@ -9,6 +9,8 @@ use App\Http\Controllers\Customer\CustomerCartController;
 use App\Http\Controllers\Customer\CustomerTransactionController;
 use App\Http\Controllers\Customer\CustomerDashboardController;
 use App\Http\Controllers\Customer\CustomerFeedbackController;
+use App\Http\Controllers\Customer\CustomerServiceController;
+use App\Http\Controllers\Customer\CustomerAdditionalServiceController;
 
 use App\Http\Controllers\Rider\RiderAuthController;
 
@@ -16,11 +18,15 @@ use App\Http\Controllers\ShopAdmin\ShopAdminAuthController;
 use App\Http\Controllers\ShopAdmin\ShopAdminRiderController;
 use App\Http\Controllers\ShopAdmin\ShopAdminStaffController;
 use App\Http\Controllers\ShopAdmin\ShopAdminMachineController;
+use App\Http\Controllers\ShopAdmin\ShopAdminServiceController;
+use App\Http\Controllers\ShopAdmin\ShopAdminAdditionalServiceController;
 
 use App\Http\Controllers\Staff\StaffAuthController;
 use App\Http\Controllers\Staff\StaffTransactionController;
 use App\Http\Controllers\Staff\StaffCartController;
 use App\Http\Controllers\Staff\StaffInventoryController;
+use App\Http\Controllers\Staff\StaffServiceController;
+use App\Http\Controllers\Staff\StaffAdditionalServiceController;
 
 use App\Http\Controllers\SuperAdmin\SuperAdminAuthController;
 
@@ -79,6 +85,9 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
         Route::get('/feedback', [CustomerFeedbackController::class, 'index'])->name('customers.feedback');
         Route::post('/feedback/add', [CustomerFeedbackController::class, 'add'])->name('customers.feedback.add');
 
+        Route::get('/services/{id}', [CustomerServiceController::class, 'index'])->name('customers.services');
+        Route::get('/additional-services/{id}', [CustomerAdditionalServiceController::class, 'index'])->name('customers.additional-services');
+
         Route::put('/edit-profile', [CustomerAccountController::class, 'editProfile'])->name('customers.edit-profile');
         Route::get('/logout', [CustomerAuthController::class, 'logout'])->name('customers.logout');
     });
@@ -108,6 +117,9 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
         Route::post('/inventories/add', [StaffInventoryController::class, 'add'])->name('staffs.inventories.add');
         Route::delete('/inventories/{id}', [StaffInventoryController::class, 'delete'])->name('staffs.inventories.delete');
 
+        Route::get('/services', [StaffServiceController::class, 'index'])->name('staffs.services');
+        Route::get('/additional-services/{id}', [StaffAdditionalServiceController::class, 'index'])->name('staffs.additional-services');
+
         Route::get('/logout', [StaffAuthController::class, 'logout'])->name('staffs.logout');
     });
     Route::prefix('shop_admins')->group(function () {
@@ -130,6 +142,18 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
         Route::get('/machines/{id}', [ShopAdminMachineController::class, 'single'])->name('shop_admins.machines.single');
         Route::put('/machines/{id}', [ShopAdminMachineController::class, 'edit'])->name('shop_admins.machines.edit');
         Route::delete('/machines/{id}', [ShopAdminMachineController::class, 'delete'])->name('shop_admins.machines.delete');
+
+        Route::get('/services', [ShopAdminServiceController::class, 'index'])->name('shop_admins.services');
+        Route::post('/services/add', [ShopAdminServiceController::class, 'add'])->name('shop_admins.services.add');
+        Route::get('/services/{id}', [ShopAdminServiceController::class, 'single'])->name('shop_admins.services.single');
+        Route::put('/services/{id}', [ShopAdminServiceController::class, 'edit'])->name('shop_admins.services.edit');
+        Route::delete('/services/{id}', [ShopAdminServiceController::class, 'delete'])->name('shop_admins.services.delete');
+
+        Route::get('/additional-services', [ShopAdminAdditionalServiceController::class, 'index'])->name('shop_admins.additional-services');
+        Route::post('/additional-services/add', [ShopAdminAdditionalServiceController::class, 'add'])->name('shop_admins.additional-services.add');
+        Route::get('/additional-services/{id}', [ShopAdminAdditionalServiceController::class, 'single'])->name('shop_admins.additional-services.single');
+        Route::put('/additional-services/{id}', [ShopAdminAdditionalServiceController::class, 'edit'])->name('shop_admins.additional-services.edit');
+        Route::delete('/additional-services/{id}', [ShopAdminAdditionalServiceController::class, 'delete'])->name('shop_admins.additional-services.delete');
 
         Route::get('/logout', [ShopAdminAuthController::class, 'logout'])->name('shop_admins.logout');
     });

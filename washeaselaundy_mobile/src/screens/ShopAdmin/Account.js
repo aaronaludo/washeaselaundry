@@ -8,7 +8,6 @@ export default function Account({ navigation }) {
   const handleLogout = async () => {
     try {
       const token = await AsyncStorage.getItem("shopAdminToken");
-
       if (token) {
         const response = await axios.get(
           "http://192.168.1.2:8000/api/shop_admins/logout",
@@ -18,11 +17,9 @@ export default function Account({ navigation }) {
             },
           }
         );
-
         if (response.data.message === "Successfully logged out") {
           await AsyncStorage.removeItem("shopAdminToken");
           await AsyncStorage.removeItem("shopAdminData");
-
           navigation.navigate("Shop Admin Login");
         } else {
           console.error("Logout failed:", response.data.message);

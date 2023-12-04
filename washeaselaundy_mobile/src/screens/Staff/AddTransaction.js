@@ -38,7 +38,7 @@ import { Card, Title, Paragraph } from "react-native-paper";
 import axios from "axios";
 import { styles as style3 } from "../../styles/Form";
 
-const Cart = ({ route, navigation }) => {
+const AddTransaction = ({ route, navigation }) => {
   const [cartItems, setCartItems] = useState([]);
   const [render, setRender] = useState(null);
   const {
@@ -47,7 +47,12 @@ const Cart = ({ route, navigation }) => {
     service_id,
     additional_service_id,
   } = route.params;
-
+  console.log(
+    transaction_mode_id,
+    shop_admin_id,
+    service_id,
+    additional_service_id
+  );
   useEffect(() => {
     const fetchCartItems = async () => {
       try {
@@ -189,4 +194,4 @@ const styles2 = StyleSheet.create({
   },
 });
 
-export default Cart;
+export default AddTransaction;

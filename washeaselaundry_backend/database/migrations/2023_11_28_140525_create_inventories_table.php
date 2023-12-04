@@ -16,7 +16,7 @@ return new class extends Migration
             $table->integer('shop_admin_id');
             $table->integer('transaction_id');
             $table->string('name');
-            $table->integer('quantity');
+            $table->string('quantity');
             $table->string('type');
             $table->timestamps();
         });

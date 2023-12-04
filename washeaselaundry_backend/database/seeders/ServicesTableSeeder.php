@@ -14,13 +14,22 @@ class ServicesTableSeeder extends Seeder
     public function run(): void
     {
         Service::create([
+            'shop_admin_id' => 4,
             'name' => 'Basic Services (Wash, Dry, Fold)',
+            'description' => "Lorem ipsum dolor sit amet consectetur adipisicing elit. Officiis explicabo nobis veniam dicta iure saepe odio pariatur nemo delectus modi!",
+            'price' => 20
         ]);
         Service::create([
+            'shop_admin_id' => 4,
             'name' => 'Ironing',
+            'description' => "Lorem ipsum dolor sit amet consectetur adipisicing elit. Officiis explicabo nobis veniam dicta iure saepe odio pariatur nemo delectus modi!",
+            'price' => 20
         ]);
         Service::create([
+            'shop_admin_id' => 4,
             'name' => 'Dry Cleaning',
+            'description' => "Lorem ipsum dolor sit amet consectetur adipisicing elit. Officiis explicabo nobis veniam dicta iure saepe odio pariatur nemo delectus modi!",
+            'price' => 20
         ]);
     }
 }

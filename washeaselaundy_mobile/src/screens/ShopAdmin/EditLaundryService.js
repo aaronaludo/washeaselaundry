@@ -1,22 +1,48 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { View, Text, TextInput, TouchableOpacity } from "react-native";
 import { styles } from "../../styles/Form";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from "axios";
 
-const AddLaundryService = ({ navigation }) => {
+const EditLaundryService = ({ navigation, route }) => {
+  const { service_id } = route.params;
   const [error, setError] = useState("");
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [price, setPrice] = useState("");
 
-  const handleSubmit = async () => {
+  useEffect(() => {
+    const fetchService = async () => {
+      try {
+        const token = await AsyncStorage.getItem("shopAdminToken");
+
+        const response = await axios.get(
+          `http://192.168.1.2:8000/api/shop_admins/services/${service_id}`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        // setServices(response.data.service);
+        setName(response.data.service.name);
+        setDescription(response.data.service.description);
+        setPrice(response.data.service.price);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    fetchService();
+  }, []);
+
+  const handleEdit = async () => {
     setError("");
     try {
       const token = await AsyncStorage.getItem("shopAdminToken");
 
-      const response = await axios.post(
-        "http://192.168.1.2:8000/api/shop_admins/services/add",
+      const response = await axios.put(
+        `http://192.168.1.2:8000/api/shop_admins/services/${service_id}`,
         {
           name: name,
           description: description,
@@ -64,7 +90,7 @@ const AddLaundryService = ({ navigation }) => {
           value={price}
           onChangeText={(text) => setPrice(text)}
         />
-        <TouchableOpacity style={styles.inputButton} onPress={handleSubmit}>
+        <TouchableOpacity style={styles.inputButton} onPress={handleEdit}>
           <Text style={styles.inputButtonText}>Submit</Text>
         </TouchableOpacity>
       </View>
@@ -72,4 +98,4 @@ const AddLaundryService = ({ navigation }) => {
   );
 };
 
-export default AddLaundryService;
+export default EditLaundryService;

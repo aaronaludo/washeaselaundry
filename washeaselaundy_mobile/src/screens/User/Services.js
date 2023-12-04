@@ -1,77 +1,70 @@
 import React, { useState, useEffect } from "react";
 import { ScrollView, StyleSheet, View, TouchableOpacity } from "react-native";
 import { Card, Title, Paragraph } from "react-native-paper";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import axios from "axios";
 
 const Dashboard = ({ route, navigation }) => {
   const { transaction_mode_id, shop_admin_id } = route.params;
+  const [services, setServices] = useState([]);
+
+  useEffect(() => {
+    const fetchServices = async () => {
+      try {
+        const token = await AsyncStorage.getItem("customerToken");
+
+        const response = await axios.get(
+          `http://192.168.1.2:8000/api/customers/services/${shop_admin_id}`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+
+        // console.log(response.data.services);
+        setServices(response.data.response);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    fetchServices();
+  }, []);
 
   return (
     <ScrollView>
       <View style={styles2.container}>
-        <Card style={styles2.card}>
-          <TouchableOpacity
-            onPress={() =>
-              navigation.navigate("User Additional Services", {
-                service_id: 1,
-                transaction_mode_id: transaction_mode_id,
-                shop_admin_id: shop_admin_id,
-              })
-            }
-          >
-            <Card.Cover
-              source={require("../../../assets/images/bg.png")}
-              style={styles2.cardImage}
-            />
-            <Card.Content>
-              <Title style={{ fontWeight: "bold" }}>
-                Basic Services (Wash, Dry, Fold)
-              </Title>
-              <Paragraph>Description</Paragraph>
-            </Card.Content>
-          </TouchableOpacity>
-        </Card>
-        <Card style={styles2.card}>
-          <TouchableOpacity
-            onPress={() =>
-              navigation.navigate("User Cart", {
-                service_id: 2,
-                transaction_mode_id: transaction_mode_id,
-                shop_admin_id: shop_admin_id,
-                additional_service_id: null,
-              })
-            }
-          >
-            <Card.Cover
-              source={require("../../../assets/images/bg.png")}
-              style={styles2.cardImage}
-            />
-            <Card.Content>
-              <Title style={{ fontWeight: "bold" }}>Ironing</Title>
-              <Paragraph>Description</Paragraph>
-            </Card.Content>
-          </TouchableOpacity>
-        </Card>
-        <Card style={styles2.card}>
-          <TouchableOpacity
-            onPress={() =>
-              navigation.navigate("User Cart", {
-                service_id: 3,
-                transaction_mode_id: transaction_mode_id,
-                shop_admin_id: shop_admin_id,
-                additional_service_id: null,
-              })
-            }
-          >
-            <Card.Cover
-              source={require("../../../assets/images/bg.png")}
-              style={styles2.cardImage}
-            />
-            <Card.Content>
-              <Title style={{ fontWeight: "bold" }}>Dry Cleaning</Title>
-              <Paragraph>Description</Paragraph>
-            </Card.Content>
-          </TouchableOpacity>
-        </Card>
+        {services.map((item) => (
+          <Card style={styles2.card} key={item.id}>
+            <TouchableOpacity
+              onPress={() =>
+                navigation.navigate(
+                  item.additional_services.length === 0
+                    ? "User Cart"
+                    : "User Additional Services",
+                  {
+                    service_id: item.id,
+                    transaction_mode_id: transaction_mode_id,
+                    shop_admin_id: shop_admin_id,
+                    price: item.price,
+                    additional_service_id: null,
+                  }
+                )
+              }
+            >
+              <Card.Cover
+                source={require("../../../assets/images/bg.png")}
+                style={styles2.cardImage}
+              />
+              <Card.Content>
+                <Title style={{ fontWeight: "bold" }}>{item.name}</Title>
+                <Paragraph>{item.description}</Paragraph>
+                <Paragraph>{item.price} pesos</Paragraph>
+              </Card.Content>
+            </TouchableOpacity>
+          </Card>
+        ))}
       </View>
     </ScrollView>
   );

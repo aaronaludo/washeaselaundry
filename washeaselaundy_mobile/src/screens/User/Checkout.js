@@ -6,7 +6,8 @@ import DropDownPicker from "react-native-dropdown-picker";
 import axios from "axios";
 
 const Checkout = ({ route, navigation }) => {
-  const { shop_admin_id } = route.params;
+  const { shop_admin_id, price } = route.params;
+  // console.log(price);
 
   const [name, setName] = useState("");
   const [address, setAddress] = useState("");
@@ -14,7 +15,7 @@ const Checkout = ({ route, navigation }) => {
   const [time, setTime] = useState("");
   const [specialInstruction, setSpecialInstruction] = useState("");
   const [paymentMethod, setPaymentMethod] = useState("");
-  const [paymentScreenshot, setPaymentScreenshot] = useState("");
+  // const [paymentScreenshot, setPaymentScreenshot] = useState("");
   const [open, setOpen] = useState(false);
   const [items, setItems] = useState([
     { label: "Select a payment method", value: "" },
@@ -36,7 +37,7 @@ const Checkout = ({ route, navigation }) => {
           time: time,
           special_instruction: specialInstruction,
           payment_method_id: paymentMethod,
-          payment_screenshot: paymentScreenshot,
+          payment_screenshot: "null",
         },
         {
           headers: {
@@ -55,6 +56,7 @@ const Checkout = ({ route, navigation }) => {
     <>
       <View style={styles.container}>
         <Text style={styles.title}>Checkout</Text>
+        <Text style={styles.title}>Total Price: {price} pesos</Text>
         <Text style={styles.description}></Text>
         <TextInput
           style={styles.input}
@@ -94,12 +96,12 @@ const Checkout = ({ route, navigation }) => {
           setValue={setPaymentMethod}
           setItems={setItems}
         />
-        <TextInput
+        {/* <TextInput
           style={styles.input}
           placeholder="Enter payment screenshot"
           value={paymentScreenshot}
           onChangeText={(text) => setPaymentScreenshot(text)}
-        />
+        /> */}
         <TouchableOpacity style={styles.inputButton} onPress={handleCheckout}>
           <Text style={styles.inputButtonText}>Confirm Information</Text>
         </TouchableOpacity>

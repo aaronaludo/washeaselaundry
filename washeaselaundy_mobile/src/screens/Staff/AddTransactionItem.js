@@ -24,6 +24,12 @@ const AddTransactionItem = ({ route, navigation }) => {
       ? null
       : route.params.additional_service_id
   );
+  const [garmentId, setGarmentId] = useState(
+    route.params.garment_id == null ? null : route.params.garment_id
+  );
+  const [price, setPrice] = useState(
+    route.params.price == null ? null : route.params.price
+  );
 
   const handleAddItem = async () => {
     try {
@@ -39,6 +45,8 @@ const AddTransactionItem = ({ route, navigation }) => {
           shop_admin_id: shopAdminId,
           service_id: serviceId,
           additional_service_id: additionalServiceId,
+          additional_service_id: additionalServiceId,
+          garment_id: garmentId,
         },
         {
           headers: {
@@ -56,6 +64,8 @@ const AddTransactionItem = ({ route, navigation }) => {
         transaction_mode_id: transactionModeId,
         shop_admin_id: shopAdminId,
         additional_service_id: additionalServiceId,
+        price: price,
+        garment_id: garmentId,
         result: response.data.message,
       });
     } catch (error) {

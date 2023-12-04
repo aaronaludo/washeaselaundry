@@ -26,6 +26,8 @@ class StaffCartController extends Controller
                 'customer_id' => $cart_item->customer_id,
                 'transaction_mode_id' => $cart_item->transaction_mode_id,
                 'shop_admin_id' => $cart_item->shop_admin_id,
+                'garment_id' => $cart_item->garment_id,
+                'garment' => $cart_item->garment,
                 'service_id' => $cart_item->service_id,
                 'additional_service_id' => $cart_item->additional_service_id,
                 'name' => $cart_item->name,
@@ -51,6 +53,7 @@ class StaffCartController extends Controller
             'transaction_mode_id' => 'required',
             'shop_admin_id' => 'required',
             'service_id' => 'required',
+            'garment_id' => 'required',
             'name' => 'required',
             'quantity' => 'required',
             'weight' => 'required',
@@ -65,6 +68,7 @@ class StaffCartController extends Controller
         $cart_item->transaction_mode_id = $request->transaction_mode_id;
         $cart_item->shop_admin_id = $request->shop_admin_id;
         $cart_item->service_id = $request->service_id;
+        $cart_item->garment_id = $request->garment_id;
         $cart_item->additional_service_id = $request->additional_service_id;
         $cart_item->name = $request->name;
         $cart_item->quantity = $request->quantity;

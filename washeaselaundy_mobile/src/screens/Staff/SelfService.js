@@ -25,7 +25,7 @@ const SelfService = ({ navigation }) => {
         buttonTextLabel={"Add Self Service"}
         buttonNavigation={"Staff Add Self Service"}
       />
-      <View style={styles.container}>
+      {/* <View style={styles.container}>
         <Text style={styles.title}>Search</Text>
         <TextInput
           style={styles2.input}
@@ -37,7 +37,7 @@ const SelfService = ({ navigation }) => {
             <Text style={styles.buttonText}>Search</Text>
           </TouchableOpacity>
         )}
-      </View>
+      </View> */}
       <View style={styles2.table}>
         <View style={styles2.headerRow}>
           <Text style={styles2.headerCell}>ID</Text>

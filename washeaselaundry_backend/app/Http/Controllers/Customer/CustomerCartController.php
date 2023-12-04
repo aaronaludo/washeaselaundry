@@ -25,6 +25,7 @@ class CustomerCartController extends Controller
                 'id' => $cart_item->id,
                 'customer_id' => $cart_item->customer_id,
                 'transaction_mode_id' => $cart_item->transaction_mode_id,
+                'garment_id' => $cart_item->garment_id,
                 'shop_admin_id' => $cart_item->shop_admin_id,
                 'service_id' => $cart_item->service_id,
                 'additional_service_id' => $cart_item->additional_service_id,
@@ -35,6 +36,7 @@ class CustomerCartController extends Controller
                 'transaction_mode' => $cart_item->transaction_mode,
                 'shop_admin' => $cart_item->shop_admin,
                 'service' => $cart_item->service,
+                'garment' => $cart_item->garment,
                 'additional_service' => $cart_item->additional_service,
                 'created_at' => $cart_item->created_at,
                 'updated_at' => $cart_item->updated_at,
@@ -51,6 +53,7 @@ class CustomerCartController extends Controller
             'transaction_mode_id' => 'required',
             'shop_admin_id' => 'required',
             'service_id' => 'required',
+            'garment_id' => 'required',
             'name' => 'required',
             'quantity' => 'required',
             'weight' => 'required',
@@ -66,6 +69,7 @@ class CustomerCartController extends Controller
         $cart_item->shop_admin_id = $request->shop_admin_id;
         $cart_item->service_id = $request->service_id;
         $cart_item->additional_service_id = $request->additional_service_id;
+        $cart_item->garment_id = $request->garment_id;
         $cart_item->name = $request->name;
         $cart_item->quantity = $request->quantity;
         $cart_item->weight = $request->weight;
@@ -81,9 +85,9 @@ class CustomerCartController extends Controller
             return response()->json(['message' => 'Customer account only'], 401);
         }
 
-        $staff = CartItem::where('customer_id', $user->id)->findOrFail($id);
+        $cart_item = CartItem::where('customer_id', $user->id)->findOrFail($id);
         
-        $staff->delete();
+        $cart_item->delete();
 
         return response()->json(['message' => 'Successfully deleted']);
     }

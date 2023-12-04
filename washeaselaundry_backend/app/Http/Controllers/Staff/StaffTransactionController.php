@@ -63,6 +63,8 @@ class StaffTransactionController extends Controller
                 "additional_service_id" => $item->additional_service_id,
                 "status_id" => $item->status_id,
                 "service" => $item->service,
+                "garmet_id" => $item->garmet_id,
+                "garment" => $item->garment,
                 "transaction_mode" => $item->transaction_mode,
                 "additional_service" => $item->additional_service,
                 "machine" => $item->machine,
@@ -151,6 +153,7 @@ class StaffTransactionController extends Controller
             $transaction_item->transaction_id = $transaction->id;
             $transaction_item->status_id = 1;
             $transaction_item->service_id = $cart_item->service_id;
+            $transaction_item->garment_id = $cart_item->garment_id;
             $transaction_item->additional_service_id = $cart_item->additional_service_id;
             $transaction_item->transaction_mode_id = $cart_item->transaction_mode_id;
             $transaction_item->name = $cart_item->name;

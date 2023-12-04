@@ -17,6 +17,7 @@ return new class extends Migration
             $table->integer('transaction_mode_id');
             $table->integer('shop_admin_id');
             $table->integer('service_id');
+            $table->integer('garment_id');
             $table->integer('additional_service_id')->nullable();
             $table->string('name');
             $table->string('quantity');

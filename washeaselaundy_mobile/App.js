@@ -21,6 +21,7 @@ import UserTransactionHistory from "./src/screens/User/TransactionHistory";
 import UserCartHistory from "./src/screens/User/CartHistory";
 import UserTransactionItemsHistory from "./src/screens/User/TransactionItemsHistory";
 import UserFeedback from "./src/screens/User/Feedback";
+import UserGarments from "./src/screens/User/Garments";
 
 import RiderTabNavigator from "./src/navigator/RiderTabNavigator";
 import RiderLogin from "./src/screens/Rider/Login";
@@ -58,6 +59,7 @@ import StaffEditMachineStatus from "./src/screens/Staff/EditMachineStatus";
 import StaffTransactions from "./src/screens/Staff/Transactions";
 import StaffViewInventory from "./src/screens/Staff/ViewInventory";
 import StaffEditInventory from "./src/screens/Staff/EditInventory";
+import StaffGarments from "./src/screens/Staff/Garments";
 
 import ShopAdminTabNavigator from "./src/navigator/ShopAdminTabNavigator";
 import ShopAdminLogin from "./src/screens/ShopAdmin/Login";
@@ -152,6 +154,7 @@ function AppNavigator() {
           component={UserTransactionItemsHistory}
         />
         <Stack.Screen name="User Feedback" component={UserFeedback} />
+        <Stack.Screen name="User Garments" component={UserGarments} />
         {/* Rider */}
         <Stack.Screen
           name="Rider Tab Navigator"
@@ -257,6 +260,7 @@ function AppNavigator() {
           name="Staff Edit Inventory"
           component={StaffEditInventory}
         />
+        <Stack.Screen name="Staff Garments" component={StaffGarments} />
         {/* Shop Admin */}
         <Stack.Screen
           name="Shop Admin Tab Navigator"

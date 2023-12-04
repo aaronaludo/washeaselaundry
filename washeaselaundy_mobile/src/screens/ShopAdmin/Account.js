@@ -6,6 +6,9 @@ import { Feather } from "@expo/vector-icons";
 
 export default function Account({ navigation }) {
   const handleLogout = async () => {
+    // await AsyncStorage.removeItem("shopAdminToken");
+    // await AsyncStorage.removeItem("shopAdminData");
+    // navigation.navigate("Shop Admin Login");
     try {
       const token = await AsyncStorage.getItem("shopAdminToken");
       if (token) {

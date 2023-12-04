@@ -30,4 +30,8 @@ class TransactionItem extends Model
     public function status(){
         return $this->belongsTo(Status::class);
     }
+
+    public function garment(){
+        return $this->belongsTo(Garment::class);
+    }
 }

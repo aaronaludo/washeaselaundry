@@ -41,13 +41,14 @@ const Dashboard = ({ route, navigation }) => {
               onPress={() =>
                 navigation.navigate(
                   item.additional_services.length === 0
-                    ? "Staff Add Transaction"
+                    ? "Staff Garments"
                     : "Staff Additional Services",
                   {
                     shop_admin_id: item.shop_admin_id,
                     transaction_mode_id: transaction_mode_id,
                     service_id: item.id,
                     additional_service_id: null,
+                    price: item.price,
                   }
                 )
               }

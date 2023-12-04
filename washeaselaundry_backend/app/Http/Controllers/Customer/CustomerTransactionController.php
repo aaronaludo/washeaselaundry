@@ -32,6 +32,7 @@ class CustomerTransactionController extends Controller
                     "service" => $item->service,
                     "transaction_mode" => $item->transaction_mode,
                     "machine" => $item->machine,
+                    "garment" => $item->garment,
                     "name" => $item->name,
                     "quantity" => $item->quantity,
                     "weight" => $item->weight
@@ -82,6 +83,7 @@ class CustomerTransactionController extends Controller
                 "transaction_id" => $item->transaction_id,
                 "additional_service_id" => $item->additional_service_id,
                 "service" => $item->service,
+                "garment" => $item->garment,
                 "transaction_mode" => $item->transaction_mode,
                 "additional_service" => $item->additional_service,
                 "machine" => $item->machine,
@@ -164,6 +166,7 @@ class CustomerTransactionController extends Controller
             $transaction_item->transaction_id = $transaction->id;
             $transaction_item->status_id = 1;
             $transaction_item->service_id = $cart_item->service_id;
+            $transaction_item->garment_id = $cart_item->garment_id;
             $transaction_item->additional_service_id = $cart_item->additional_service_id;
             $transaction_item->transaction_mode_id = $cart_item->transaction_mode_id;
             $transaction_item->name = $cart_item->name;

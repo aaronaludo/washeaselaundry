@@ -39,11 +39,12 @@ const Dashboard = ({ route, navigation }) => {
           <Card style={styles2.card} key={item.id}>
             <TouchableOpacity
               onPress={() =>
-                navigation.navigate("Staff Add Transaction", {
+                navigation.navigate("Staff Garments", {
                   shop_admin_id: shop_admin_id,
                   transaction_mode_id: transaction_mode_id,
                   service_id: service_id,
                   additional_service_id: item.id,
+                  price: item.price,
                 })
               }
             >

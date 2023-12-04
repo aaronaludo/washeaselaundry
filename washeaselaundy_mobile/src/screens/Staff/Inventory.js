@@ -76,7 +76,7 @@ const Inventory = ({ navigation, route }) => {
         buttonTextLabel={"Add Inventory"}
         buttonNavigation={"Staff Add Inventory"}
       />
-      <View style={styles.container}>
+      {/* <View style={styles.container}>
         <Text style={styles.title}>Search</Text>
         <TextInput
           style={styles2.input}
@@ -88,7 +88,7 @@ const Inventory = ({ navigation, route }) => {
             <Text style={styles.buttonText}>Search</Text>
           </TouchableOpacity>
         )}
-      </View>
+      </View> */}
       <View style={styles2.table}>
         <View style={styles2.headerRow}>
           <Text style={styles2.headerCell}>ID</Text>

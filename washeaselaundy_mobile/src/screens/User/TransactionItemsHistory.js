@@ -13,6 +13,7 @@ import axios from "axios";
 const TransactionItemsHistory = ({ route }) => {
   const { transaction_id } = route.params;
   const [transaction, setTransaction] = useState(null);
+  console.log(transaction);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -81,6 +82,7 @@ const TransactionItemsHistory = ({ route }) => {
                 <Paragraph>{item.weight} kilogram</Paragraph>
                 <Paragraph>{item.transaction_mode.name}</Paragraph>
                 <Paragraph>{item.service.name}</Paragraph>
+                <Paragraph>{item.garment.name}</Paragraph>
                 <Paragraph>
                   {item.additional_service === null
                     ? item.additional_service

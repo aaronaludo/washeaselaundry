@@ -46,12 +46,16 @@ const AddTransaction = ({ route, navigation }) => {
     shop_admin_id,
     service_id,
     additional_service_id,
+    price,
+    garment_id,
   } = route.params;
   console.log(
     transaction_mode_id,
     shop_admin_id,
     service_id,
-    additional_service_id
+    additional_service_id,
+    price,
+    garment_id
   );
   useEffect(() => {
     const fetchCartItems = async () => {
@@ -100,6 +104,8 @@ const AddTransaction = ({ route, navigation }) => {
     }
   };
 
+  console.log(cartItems);
+
   return (
     <ScrollView>
       {/* <View style={styles2.container}>
@@ -124,6 +130,8 @@ const AddTransaction = ({ route, navigation }) => {
                 service_id: service_id,
                 shop_admin_id: shop_admin_id,
                 additional_service_id: additional_service_id,
+                price: price,
+                garment_id: garment_id,
               })
             }
           >
@@ -143,6 +151,7 @@ const AddTransaction = ({ route, navigation }) => {
               </Paragraph>
               <Paragraph>{item.transaction_mode.name}</Paragraph>
               <Paragraph>{item.service.name}</Paragraph>
+              <Paragraph>{item.garment.name}</Paragraph>
               <Paragraph>
                 {item.additional_service === null
                   ? item.additional_service

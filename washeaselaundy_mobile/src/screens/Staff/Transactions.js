@@ -15,7 +15,7 @@ const Transactions = ({ navigation, route }) => {
   const { result } = route.params;
   const [transactions, setTransactions] = useState([]);
   const [userData, setUserData] = useState(null);
-  // console.log(transactions);
+  console.log(transactions);
 
   useEffect(() => {
     const fetchData = async () => {

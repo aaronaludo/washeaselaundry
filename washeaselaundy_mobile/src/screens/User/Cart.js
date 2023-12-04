@@ -22,12 +22,17 @@ const Cart = ({ route, navigation }) => {
     service_id,
     additional_service_id,
     price,
+    garment_id,
   } = route.params;
   console.log(
-    cartItems.reduce((sum, item) => sum + parseInt(item.quantity), 0)
+    transaction_mode_id,
+    shop_admin_id,
+    service_id,
+    additional_service_id,
+    price,
+    garment_id
   );
   console.log(cartItems);
-
   useEffect(() => {
     const fetchShopAdmins = async () => {
       try {
@@ -127,6 +132,8 @@ const Cart = ({ route, navigation }) => {
                 service_id: service_id,
                 shop_admin_id: shop_admin_id,
                 additional_service_id: additional_service_id,
+                garment_id: garment_id,
+                price: price,
               })
             }
           >
@@ -146,6 +153,7 @@ const Cart = ({ route, navigation }) => {
               </Paragraph>
               <Paragraph>{item.transaction_mode.name}</Paragraph>
               <Paragraph>{item.service.name}</Paragraph>
+              <Paragraph>{item.garment.name}</Paragraph>
               <Paragraph>
                 {item.additional_service === null
                   ? item.additional_service

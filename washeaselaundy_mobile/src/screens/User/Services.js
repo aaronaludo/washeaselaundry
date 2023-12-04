@@ -41,7 +41,7 @@ const Dashboard = ({ route, navigation }) => {
               onPress={() =>
                 navigation.navigate(
                   item.additional_services.length === 0
-                    ? "User Cart"
+                    ? "User Garments"
                     : "User Additional Services",
                   {
                     service_id: item.id,

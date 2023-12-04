@@ -24,6 +24,12 @@ const AddCartItems = ({ route, navigation }) => {
       ? null
       : route.params.additional_service_id
   );
+  const [garmentId, setGarmentId] = useState(
+    route.params.garment_id == null ? null : route.params.garment_id
+  );
+  const [price, setPrice] = useState(
+    route.params.price == null ? null : route.params.price
+  );
 
   const {
     transaction_mode_id,
@@ -38,6 +44,7 @@ const AddCartItems = ({ route, navigation }) => {
     service_id,
     additional_service_id
   );
+
   const handleAddItem = async () => {
     try {
       const token = await AsyncStorage.getItem("customerToken");
@@ -52,6 +59,7 @@ const AddCartItems = ({ route, navigation }) => {
           shop_admin_id: shopAdminId,
           service_id: serviceId,
           additional_service_id: additionalServiceId,
+          garment_id: garmentId,
         },
         {
           headers: {
@@ -69,6 +77,8 @@ const AddCartItems = ({ route, navigation }) => {
         transaction_mode_id: transactionModeId,
         shop_admin_id: shopAdminId,
         additional_service_id: additionalServiceId,
+        price: price,
+        garment_id: garmentId,
         result: response.data.message,
       });
     } catch (error) {

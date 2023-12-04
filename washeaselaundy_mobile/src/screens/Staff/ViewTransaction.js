@@ -14,6 +14,7 @@ import { styles } from "../../styles/Box";
 const ViewTransaction = ({ route, navigation }) => {
   const { transaction_id, result } = route.params;
   const [transaction, setTransaction] = useState(null);
+  console.log(transaction);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -82,6 +83,7 @@ const ViewTransaction = ({ route, navigation }) => {
                 <Paragraph>{item.weight} kilogram</Paragraph>
                 <Paragraph>{item.transaction_mode.name}</Paragraph>
                 <Paragraph>{item.service.name}</Paragraph>
+                <Paragraph>{item.garment.name}</Paragraph>
                 <Paragraph>
                   {item.machine === null
                     ? null

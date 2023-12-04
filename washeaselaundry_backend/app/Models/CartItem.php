@@ -28,4 +28,8 @@ class CartItem extends Model
     public function additional_service(){
         return $this->belongsTo(AdditionalService::class);
     }
+
+    public function garment(){
+        return $this->belongsTo(Garment::class);
+    }
 }

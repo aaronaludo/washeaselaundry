@@ -14,7 +14,7 @@ const AddInventory = ({ navigation }) => {
       const token = await AsyncStorage.getItem("staffToken");
 
       const response = await axios.post(
-        "http://192.168.1.2:8000/api/staffs/inventories/add",
+        `${"http://192.168.1.8:8000"}/api/staffs/inventories/add`,
         {
           name: name,
           quantity: quantity,

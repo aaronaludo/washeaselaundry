@@ -22,7 +22,7 @@ const ViewTransaction = ({ route, navigation }) => {
         const token = await AsyncStorage.getItem("staffToken");
 
         const response = await axios.get(
-          `http://192.168.1.2:8000/api/staffs/transactions/${transaction_id}`,
+          `${"http://192.168.1.8:8000"}/api/staffs/transactions/${transaction_id}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -52,6 +52,7 @@ const ViewTransaction = ({ route, navigation }) => {
                   " " +
                   transaction.shop_admin.last_name}
               </Paragraph>
+              <Paragraph>{transaction.total_price} pesos</Paragraph>
               <Paragraph>{transaction.address}</Paragraph>
               <Paragraph>{transaction.date}</Paragraph>
               <Paragraph>{transaction.time}</Paragraph>
@@ -84,10 +85,11 @@ const ViewTransaction = ({ route, navigation }) => {
                 <Paragraph>{item.transaction_mode.name}</Paragraph>
                 <Paragraph>{item.service.name}</Paragraph>
                 <Paragraph>{item.garment.name}</Paragraph>
+                <Paragraph>{item.status.name}</Paragraph>
                 <Paragraph>
                   {item.machine === null
                     ? null
-                    : item.machine.name + " (" + item.status.name + ") "}
+                    : item.machine.name + " (" + item.machine.status_id + ") "}
                 </Paragraph>
                 <Paragraph>
                   {item.additional_service === null
@@ -99,23 +101,26 @@ const ViewTransaction = ({ route, navigation }) => {
                   onPress={() =>
                     navigation.navigate("Staff Edit Transaction Item", {
                       transaction_item_id: item.id,
+                      transaction_mode_id: item.transaction_mode.id,
                     })
                   }
                 >
                   <Text style={styles.buttonText}>Edit</Text>
                 </TouchableOpacity>
-                {/* {item.machine === null ? null : (
+                {item.machine === null ? null : (
                   <TouchableOpacity
                     style={styles.buttonContainer}
                     onPress={() =>
                       navigation.navigate("Staff Edit Machine Status", {
                         machine_id: item.machine.id,
+                        transaction_id: transaction_id,
+                        machine_status_id: item.machine.status_id,
                       })
                     }
                   >
                     <Text style={styles.buttonText}>Change Machine Status</Text>
                   </TouchableOpacity>
-                )} */}
+                )}
               </Card.Content>
             </Card>
           ))}

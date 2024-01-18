@@ -3,9 +3,20 @@ import { ScrollView, StyleSheet, View, TouchableOpacity } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Card, Title, Paragraph } from "react-native-paper";
 import axios from "axios";
+import { Feather } from "@expo/vector-icons";
 
 const Dashboard = ({ navigation }) => {
   const [shopAdmins, setShopAdmins] = useState([]);
+  const allRatings = shopAdmins.flatMap((admin) =>
+    admin.transactions.flatMap((transaction) =>
+      transaction.feedbacks.map((feedback) => feedback.rating)
+    )
+  );
+
+  const totalAverage =
+    allRatings.reduce((sum, rating) => sum + rating, 0) / allRatings.length;
+
+  const roundedAverage = totalAverage.toFixed(2);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -13,7 +24,7 @@ const Dashboard = ({ navigation }) => {
         const token = await AsyncStorage.getItem("customerToken");
 
         const response = await axios.get(
-          "http://192.168.1.2:8000/api/customers/shop_admins",
+          `${"http://192.168.1.8:8000"}/api/customers/shop_admins`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -51,6 +62,10 @@ const Dashboard = ({ navigation }) => {
                 <Paragraph>{item.address}</Paragraph>
                 <Paragraph>{item.phone_number}</Paragraph>
                 <Paragraph>{item.email}</Paragraph>
+                <Paragraph style={{ marginTop: 10 }}>
+                  <Feather name="star" size={20} color="black" />{" "}
+                  {roundedAverage}
+                </Paragraph>
               </Card.Content>
             </TouchableOpacity>
           </Card>

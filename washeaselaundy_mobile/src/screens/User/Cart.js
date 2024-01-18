@@ -24,22 +24,24 @@ const Cart = ({ route, navigation }) => {
     price,
     garment_id,
   } = route.params;
-  console.log(
-    transaction_mode_id,
-    shop_admin_id,
-    service_id,
-    additional_service_id,
-    price,
-    garment_id
-  );
   console.log(cartItems);
+  const totalPrice = cartItems.reduce((sum, item) => {
+    if (!item.additional_service) {
+      return sum + parseInt(item.service.price);
+    } else {
+      return sum + parseInt(item.additional_service.price);
+    }
+  }, 0);
+
+  console.log(totalPrice);
+
   useEffect(() => {
     const fetchShopAdmins = async () => {
       try {
         const token = await AsyncStorage.getItem("customerToken");
 
         const response = await axios.get(
-          "http://192.168.1.2:8000/api/customers/shop_admins",
+          `${"http://192.168.1.8:8000"}/api/customers/shop_admins`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -58,7 +60,7 @@ const Cart = ({ route, navigation }) => {
         const token = await AsyncStorage.getItem("customerToken");
 
         const response = await axios.get(
-          "http://192.168.1.2:8000/api/customers/cart",
+          `${"http://192.168.1.8:8000"}/api/customers/cart`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -85,7 +87,7 @@ const Cart = ({ route, navigation }) => {
       const token = await AsyncStorage.getItem("customerToken");
 
       const response = await axios.delete(
-        `http://192.168.1.2:8000/api/customers/cart/${id}`,
+        `${"http://192.168.1.8:8000"}/api/customers/cart/${id}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -159,6 +161,10 @@ const Cart = ({ route, navigation }) => {
                   ? item.additional_service
                   : item.additional_service.name}
               </Paragraph>
+              <Paragraph>
+                {item.machine_id !== null &&
+                  `${item.machine.name} (${item.machine_status.name})`}
+              </Paragraph>
               <TouchableOpacity
                 style={styles.buttonContainer}
                 onPress={() => handleDelete(item.id)}
@@ -174,11 +180,7 @@ const Cart = ({ route, navigation }) => {
             onPress={() =>
               navigation.navigate("User Checkout", {
                 shop_admin_id: shop_admin_id,
-                price:
-                  cartItems.reduce(
-                    (sum, item) => sum + parseInt(item.quantity),
-                    0
-                  ) * parseInt(price),
+                price: totalPrice,
               })
             }
           >

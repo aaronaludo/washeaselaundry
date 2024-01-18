@@ -49,4 +49,8 @@ class User extends Authenticatable
     public function subscription(){
         return $this->hasOne(ShopAdminSubscription::class, 'shop_admin_id')->orderBy('id', 'desc');
     }
+
+    public function transactions(){
+        return $this->hasMany(Transaction::class, 'shop_admin_id');
+    }
 }

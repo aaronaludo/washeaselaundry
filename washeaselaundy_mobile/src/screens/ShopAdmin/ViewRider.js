@@ -19,7 +19,7 @@ const ViewRider = ({ route }) => {
         const token = await AsyncStorage.getItem("shopAdminToken");
 
         const response = await axios.get(
-          `http://192.168.1.2:8000/api/shop_admins/riders/${rider_id}`,
+          `${"http://192.168.1.8:8000"}/api/shop_admins/riders/${rider_id}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,

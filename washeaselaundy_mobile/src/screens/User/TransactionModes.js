@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { ScrollView, StyleSheet, View, TouchableOpacity } from "react-native";
-import { Card, Title, Paragraph } from "react-native-paper";
+import { Text, Card, Title, Paragraph } from "react-native-paper";
+import { styles } from "../../styles/Box";
 
 const TransactionMode = ({ route, navigation }) => {
   const { shop_admin_id } = route.params;
@@ -8,6 +9,23 @@ const TransactionMode = ({ route, navigation }) => {
   return (
     <ScrollView>
       <View style={styles2.container}>
+        <Card style={styles2.card}>
+          <Card.Content>
+            <Title style={{ fontWeight: "bold" }}>Selling Items</Title>
+            <Paragraph>
+              Lorem Ipsum is simply dummy text of the printing and typesetting
+              industry.
+            </Paragraph>
+            <TouchableOpacity
+              style={[styles.buttonContainer, { marginBottom: 10 }]}
+              onPress={() => {
+                navigation.navigate("User Selling Items");
+              }}
+            >
+              <Text style={styles.buttonText}>View Items</Text>
+            </TouchableOpacity>
+          </Card.Content>
+        </Card>
         <Card style={styles2.card}>
           <TouchableOpacity
             onPress={() =>

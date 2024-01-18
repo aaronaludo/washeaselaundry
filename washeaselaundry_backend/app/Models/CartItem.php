@@ -32,4 +32,8 @@ class CartItem extends Model
     public function garment(){
         return $this->belongsTo(Garment::class);
     }
+
+    public function machine(){
+        return $this->belongsTo(Machine::class);
+    }
 }

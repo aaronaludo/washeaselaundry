@@ -23,7 +23,7 @@ const EditMachine = ({ navigation, route }) => {
         const token = await AsyncStorage.getItem("shopAdminToken");
 
         const response = await axios.get(
-          `http://192.168.1.2:8000/api/shop_admins/machines/${machine_id}`,
+          `${"http://192.168.1.8:8000"}/api/shop_admins/machines/${machine_id}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -46,7 +46,7 @@ const EditMachine = ({ navigation, route }) => {
       const token = await AsyncStorage.getItem("shopAdminToken");
 
       const response = await axios.put(
-        `http://192.168.1.2:8000/api/shop_admins/machines/${machine_id}`,
+        `${"http://192.168.1.8:8000"}/api/shop_admins/machines/${machine_id}`,
         {
           machine_type_id: machineType,
           name: name,

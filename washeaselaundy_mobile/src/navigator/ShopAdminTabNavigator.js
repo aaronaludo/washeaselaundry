@@ -22,7 +22,7 @@ export default function App({ navigation }) {
         ),
         headerLeft: () => (
           <TouchableOpacity
-            onPress={() => navigation.navigate("Rider Account")}
+            onPress={() => navigation.navigate("Shop Admin Account")}
             style={{ marginLeft: 15 }}
           >
             <Image

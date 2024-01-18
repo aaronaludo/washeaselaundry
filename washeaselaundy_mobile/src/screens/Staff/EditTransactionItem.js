@@ -6,22 +6,29 @@ import axios from "axios";
 import DropDownPicker from "react-native-dropdown-picker";
 
 const EditTransactionItem = ({ route, navigation }) => {
-  const { transaction_item_id } = route.params;
+  const { transaction_item_id, transaction_mode_id } = route.params;
   const [machine, setMachine] = useState(0);
-  const [status, setStatus] = useState("");
+  const [status, setStatus] = useState(0);
   const [open, setOpen] = useState(false);
-  const [items, setItems] = useState([
-    { label: "Pending", value: "1" },
-    { label: "Processing", value: "2" },
-    { label: "Ready to Pickup", value: "3" },
-    { label: "Delivered", value: "4" },
-    { label: "Cancelled", value: "5" },
-    { label: "Successful", value: "6" },
-  ]);
+  const [items, setItems] = useState(
+    transaction_mode_id === 1
+      ? [
+          { label: "Select item", value: 0 },
+          { label: "Processing", value: 2 },
+          { label: "Successful", value: 6 },
+        ]
+      : [
+          { label: "Select item", value: 0 },
+          { label: "Pending", value: 1 },
+          { label: "Processing", value: 2 },
+          { label: "Ready to Pickup", value: 3 },
+          { label: "Delivered", value: 4 },
+          { label: "Cancelled", value: 5 },
+          { label: "Successful", value: 6 },
+        ]
+  );
   const [open2, setOpen2] = useState(false);
   const [items2, setItems2] = useState([]);
-
-  console.log(items2);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -29,20 +36,13 @@ const EditTransactionItem = ({ route, navigation }) => {
         const token = await AsyncStorage.getItem("staffToken");
 
         const response = await axios.get(
-          `http://192.168.1.2:8000/api/staffs/transactions/machines`,
+          `${"http://192.168.1.8:8000"}/api/staffs/transactions/machines`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
             },
           }
         );
-
-        // console.log(
-        //   response.data.machines.map((item) => ({
-        //     label: item.name,
-        //     value: item.id,
-        //   }))
-        // );
         setItems2(
           response.data.machines.map((item) => ({
             label: item.name,
@@ -59,7 +59,7 @@ const EditTransactionItem = ({ route, navigation }) => {
         const token = await AsyncStorage.getItem("staffToken");
 
         const response = await axios.get(
-          `http://192.168.1.2:8000/api/staffs/transactions/item/${transaction_item_id}`,
+          `${"http://192.168.1.8:8000"}/api/staffs/transactions/item/${transaction_item_id}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -69,7 +69,6 @@ const EditTransactionItem = ({ route, navigation }) => {
 
         setMachine(response.data.transaction_item.machine_id);
         setStatus(response.data.transaction_item.status_id);
-        // console.log(response.data.transaction_item);
       } catch (error) {
         console.log(error);
       }
@@ -84,7 +83,7 @@ const EditTransactionItem = ({ route, navigation }) => {
       const token = await AsyncStorage.getItem("staffToken");
 
       const response = await axios.put(
-        `http://192.168.1.2:8000/api/staffs/transactions/item/${transaction_item_id}`,
+        `${"http://192.168.1.8:8000"}/api/staffs/transactions/item/${transaction_item_id}`,
         {
           machine_id: machine,
           status_id: status,
@@ -95,8 +94,6 @@ const EditTransactionItem = ({ route, navigation }) => {
           },
         }
       );
-
-      // console.log(response.data.response[0]);
 
       navigation.navigate("Staff View Transaction", {
         transaction_id: response.data.response[0].transaction_id,

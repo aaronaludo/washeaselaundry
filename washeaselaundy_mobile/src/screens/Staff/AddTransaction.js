@@ -49,21 +49,21 @@ const AddTransaction = ({ route, navigation }) => {
     price,
     garment_id,
   } = route.params;
-  console.log(
-    transaction_mode_id,
-    shop_admin_id,
-    service_id,
-    additional_service_id,
-    price,
-    garment_id
-  );
+  const totalPrice = cartItems.reduce((sum, item) => {
+    if (!item.additional_service) {
+      return sum + parseInt(item.service.price);
+    } else {
+      return sum + parseInt(item.additional_service.price);
+    }
+  }, 0);
+
   useEffect(() => {
     const fetchCartItems = async () => {
       try {
         const token = await AsyncStorage.getItem("staffToken");
 
         const response = await axios.get(
-          "http://192.168.1.2:8000/api/staffs/cart",
+          `${"http://192.168.1.8:8000"}/api/staffs/cart`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -89,7 +89,7 @@ const AddTransaction = ({ route, navigation }) => {
       const token = await AsyncStorage.getItem("staffToken");
 
       const response = await axios.delete(
-        `http://192.168.1.2:8000/api/staffs/cart/${id}`,
+        `${"http://192.168.1.8:8000"}/api/staffs/cart/${id}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -172,6 +172,7 @@ const AddTransaction = ({ route, navigation }) => {
             onPress={() =>
               navigation.navigate("Staff Checkout", {
                 shop_admin_id: shop_admin_id,
+                price: totalPrice,
               })
             }
           >

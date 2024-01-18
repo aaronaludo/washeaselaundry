@@ -20,7 +20,7 @@ const TransactionHistory = ({ navigation }) => {
         const token = await AsyncStorage.getItem("customerToken");
 
         const response = await axios.get(
-          "http://192.168.1.2:8000/api/customers/transactions",
+          `${"http://192.168.1.8:8000"}/api/customers/transactions`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -56,14 +56,14 @@ const TransactionHistory = ({ navigation }) => {
                 <Paragraph>
                   {item.shop_admin.first_name + " " + item.shop_admin.last_name}
                 </Paragraph>
+                <Paragraph>{item.total_price} pesos</Paragraph>
                 <Paragraph>{item.address}</Paragraph>
                 <Paragraph>{item.date}</Paragraph>
-                <Paragraph>{item.time}</Paragraph>
                 <Paragraph>{item.status.name}</Paragraph>
                 <Paragraph>{item.payment_method.name}</Paragraph>
                 <Paragraph>{item.special_instruction}</Paragraph>
                 <TouchableOpacity
-                  style={styles.buttonContainer}
+                  style={[styles.buttonContainer, { marginBottom: 10 }]}
                   onPress={() =>
                     navigation.navigate("User Feedback", {
                       transaction_id: item.id,

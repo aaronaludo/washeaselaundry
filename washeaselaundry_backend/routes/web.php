@@ -2,17 +2,30 @@
 
 use Illuminate\Support\Facades\Route;
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "web" middleware group. Make something great!
-|
-*/
+use App\Http\Controllers\Web\Customer\CustomerAuthController;
 
-Route::get('/', function () {
-    return view('welcome');
+use App\Http\Controllers\Web\Rider\RiderAuthController;
+
+use App\Http\Controllers\Web\SuperAdmin\SuperAdminAuthController;
+
+use App\Http\Controllers\Web\Staff\StaffAuthController;
+
+use App\Http\Controllers\Web\ShopAdmin\ShopAdminAuthController;
+
+Route::get('/', [CustomerAuthController::class, 'index'])->name('customers.index');
+
+Route::prefix('riders')->group(function () {
+    Route::get('/login', [RiderAuthController::class, 'login'])->name('riders.login');
+});
+
+Route::prefix('staffs')->group(function () {
+    Route::get('/login', [StaffAuthController::class, 'login'])->name('staffs.login');
+});
+
+Route::prefix('shop_admins')->group(function () {
+    Route::get('/login', [ShopAdminAuthController::class, 'login'])->name('shop_admins.login');
+});
+
+Route::prefix('super_admins')->group(function () {
+    Route::get('/login', [SuperAdminAuthController::class, 'login'])->name('super_admins.login');
 });

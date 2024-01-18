@@ -1,13 +1,15 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { View, Text, TextInput, TouchableOpacity } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { styles } from "../../styles/Form";
 import axios from "axios";
+import DropDownPicker from "react-native-dropdown-picker";
 
 const AddCartItems = ({ route, navigation }) => {
   const [name, setName] = useState("");
   const [quantity, setQuantity] = useState("");
   const [weight, setWeight] = useState("");
+  const [machine, setMachine] = useState(null);
   const [transactionModeId, setTransactionModeId] = useState(
     route.params.transaction_mode_id == null
       ? null
@@ -30,27 +32,52 @@ const AddCartItems = ({ route, navigation }) => {
   const [price, setPrice] = useState(
     route.params.price == null ? null : route.params.price
   );
-
   const {
     transaction_mode_id,
     shop_admin_id,
     service_id,
     additional_service_id,
   } = route.params;
+  const [open, setOpen] = useState(false);
+  const [items, setItems] = useState([]);
 
-  console.log(
-    transaction_mode_id,
-    shop_admin_id,
-    service_id,
-    additional_service_id
-  );
+  console.log(machine);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const token = await AsyncStorage.getItem("customerToken");
+
+        const response = await axios.get(
+          `${"http://192.168.1.8:8000"}/api/customers/machines/${shop_admin_id}`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        setItems(
+          response.data.machines
+            .filter((item) => item.status_id === 7)
+            .map((item) => ({
+              label: item.name,
+              value: item.id,
+            }))
+        );
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    fetchData();
+  }, []);
 
   const handleAddItem = async () => {
     try {
       const token = await AsyncStorage.getItem("customerToken");
 
       const response = await axios.post(
-        "http://192.168.1.2:8000/api/customers/cart/add",
+        `${"http://192.168.1.8:8000"}/api/customers/cart/add`,
         {
           name: name,
           quantity: quantity,
@@ -60,6 +87,7 @@ const AddCartItems = ({ route, navigation }) => {
           service_id: serviceId,
           additional_service_id: additionalServiceId,
           garment_id: garmentId,
+          machine_id: transaction_mode_id === 1 ? machine : null,
         },
         {
           headers: {
@@ -112,6 +140,16 @@ const AddCartItems = ({ route, navigation }) => {
           value={weight}
           onChangeText={(text) => setWeight(text)}
         />
+        {transaction_mode_id === 1 && (
+          <DropDownPicker
+            open={open}
+            value={machine}
+            items={items}
+            setOpen={setOpen}
+            setValue={setMachine}
+            setItems={setItems}
+          />
+        )}
         <TouchableOpacity style={styles.inputButton} onPress={handleAddItem}>
           <Text style={styles.inputButtonText}>Add Item</Text>
         </TouchableOpacity>

@@ -9,11 +9,13 @@ import {
 import { Card, Title, Paragraph } from "react-native-paper";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from "axios";
+import { Feather } from "@expo/vector-icons";
+import { styles } from "../../styles/Box";
 
 const TransactionItemsHistory = ({ route }) => {
   const { transaction_id } = route.params;
   const [transaction, setTransaction] = useState(null);
-  console.log(transaction);
+  const [render, setRender] = useState(null);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -21,7 +23,7 @@ const TransactionItemsHistory = ({ route }) => {
         const token = await AsyncStorage.getItem("customerToken");
 
         const response = await axios.get(
-          `http://192.168.1.2:8000/api/customers/transactions/${transaction_id}`,
+          `${"http://192.168.1.8:8000"}/api/customers/transactions/${transaction_id}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -36,9 +38,39 @@ const TransactionItemsHistory = ({ route }) => {
     };
 
     fetchData(); // Call the async function
-  }, []);
+  }, [render]);
 
-  // console.log(transaction);
+  const renderRatingStars = (rating) => {
+    const stars = Array.from({ length: 5 }).map((_, index) => (
+      <Feather
+        key={index}
+        name={index < rating ? "star" : ""}
+        size={16}
+        color="black"
+      />
+    ));
+    return <View style={{ flexDirection: "row", marginTop: 20 }}>{stars}</View>;
+  };
+
+  const handleDelete = async (id) => {
+    try {
+      const token = await AsyncStorage.getItem("customerToken");
+
+      const response = await axios.delete(
+        `${"http://192.168.1.8:8000"}/api/customers/feedback/${id}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      setRender(response);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <ScrollView>
       <View style={styles2.container}>
@@ -51,9 +83,10 @@ const TransactionItemsHistory = ({ route }) => {
                   " " +
                   transaction.shop_admin.last_name}
               </Paragraph>
+              <Paragraph>{transaction.total_price} pesos</Paragraph>
               <Paragraph>{transaction.address}</Paragraph>
               <Paragraph>{transaction.date}</Paragraph>
-              <Paragraph>{transaction.time}</Paragraph>
+              {/* <Paragraph>{transaction.time}</Paragraph> */}
               <Paragraph>{transaction.status.name}</Paragraph>
               <Paragraph>{transaction.payment_method.name}</Paragraph>
               <Paragraph>{transaction.special_instruction}</Paragraph>
@@ -115,6 +148,13 @@ const TransactionItemsHistory = ({ route }) => {
                 <Paragraph>
                   {item.customer.first_name + " " + item.customer.last_name}
                 </Paragraph>
+                {renderRatingStars(item.rating)}
+                <TouchableOpacity
+                  style={styles.buttonContainer}
+                  onPress={() => handleDelete(item.id)}
+                >
+                  <Text style={styles.buttonText}>Delete</Text>
+                </TouchableOpacity>
               </Card.Content>
             </Card>
           ))}

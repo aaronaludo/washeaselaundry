@@ -17,7 +17,7 @@ const ViewStaff = ({ route }) => {
         const token = await AsyncStorage.getItem("shopAdminToken");
 
         const response = await axios.get(
-          `http://192.168.1.2:8000/api/shop_admins/machines/${machine_id}`,
+          `${"http://192.168.1.8:8000"}/api/shop_admins/machines/${machine_id}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -27,8 +27,8 @@ const ViewStaff = ({ route }) => {
         // console.log(response.data.machine);
         setMachine(response.data.machine);
         // setName(response.data.machine.name);
-        setStatus(response.data.machine.status.name);
-        setMachineType(response.data.machine.machine_type.name);
+        // setStatus(response.data.machine.status.name);
+        // setMachineType(response.data.machine.machine_type.name);
       } catch (error) {
         console.log(error);
       }

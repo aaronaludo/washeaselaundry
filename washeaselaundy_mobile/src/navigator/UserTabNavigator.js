@@ -4,6 +4,7 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import Dashboard from "../screens/User/Dashboard";
 import Notification from "../screens/User/Notification";
 import About from "../screens/User/About";
+import Test from "../screens/User/Test";
 import { Feather } from "@expo/vector-icons";
 
 const Tab = createBottomTabNavigator();
@@ -22,7 +23,7 @@ export default function App({ navigation }) {
         ),
         headerLeft: () => (
           <TouchableOpacity
-            onPress={() => navigation.navigate("Rider Account")}
+            onPress={() => navigation.navigate("User Account")}
             style={{ marginLeft: 15 }}
           >
             <Image
@@ -77,6 +78,19 @@ export default function App({ navigation }) {
           ),
         }}
       />
+      {/* <Tab.Screen
+        name="Test"
+        component={Test}
+        options={{
+          tabBarIcon: ({ color, size, focused }) => (
+            <Feather
+              name="bell"
+              size={24}
+              color={focused ? "#0d6efd" : "grey"}
+            />
+          ),
+        }}
+      /> */}
     </Tab.Navigator>
   );
 }

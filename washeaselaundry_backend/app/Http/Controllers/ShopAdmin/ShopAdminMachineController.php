@@ -24,6 +24,7 @@ class ShopAdminMachineController extends Controller
             $response[] = [
                 'id' => $machine->id,
                 'name' => $machine->name,
+                'status_id' => $machine->status_id,
                 'machine_type' => $machine->machine_type,
                 'created_at' => $machine->created_at,
                 'updated_at' => $machine->updated_at,
@@ -48,6 +49,7 @@ class ShopAdminMachineController extends Controller
         $machine = new Machine();
         $machine->shop_admin_id = $user->id;
         $machine->name = $request->name;
+        $machine->status_id = 1;
         $machine->machine_type_id = $request->machine_type_id;
         $machine->save();
 
@@ -73,6 +75,7 @@ class ShopAdminMachineController extends Controller
 
         $request->validate([
             'machine_type_id' => 'required',
+            'status_id' => 'required',
             'name' => 'required',
         ]);
 
@@ -81,6 +84,7 @@ class ShopAdminMachineController extends Controller
         }
 
         $machine->name = $request->name;
+        $machine->status_id = 1;
         $machine->machine_type_id = $request->machine_type_id;
         $machine->save();
 

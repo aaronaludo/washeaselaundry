@@ -13,8 +13,10 @@ use App\Http\Controllers\Customer\CustomerServiceController;
 use App\Http\Controllers\Customer\CustomerAdditionalServiceController;
 
 use App\Http\Controllers\Rider\RiderAuthController;
+use App\Http\Controllers\Rider\RiderAccountController;
 
 use App\Http\Controllers\ShopAdmin\ShopAdminAuthController;
+use App\Http\Controllers\ShopAdmin\ShopAdminAccountController;
 use App\Http\Controllers\ShopAdmin\ShopAdminRiderController;
 use App\Http\Controllers\ShopAdmin\ShopAdminStaffController;
 use App\Http\Controllers\ShopAdmin\ShopAdminMachineController;
@@ -22,24 +24,18 @@ use App\Http\Controllers\ShopAdmin\ShopAdminServiceController;
 use App\Http\Controllers\ShopAdmin\ShopAdminAdditionalServiceController;
 
 use App\Http\Controllers\Staff\StaffAuthController;
+use App\Http\Controllers\Staff\StaffAccountController;
 use App\Http\Controllers\Staff\StaffTransactionController;
 use App\Http\Controllers\Staff\StaffCartController;
-use App\Http\Controllers\Staff\StaffInventoryController;
 use App\Http\Controllers\Staff\StaffServiceController;
 use App\Http\Controllers\Staff\StaffAdditionalServiceController;
+use App\Http\Controllers\Staff\StaffInventoryController;
+use App\Http\Controllers\Staff\StaffSellingItemController;
 
 use App\Http\Controllers\SuperAdmin\SuperAdminAuthController;
+use App\Http\Controllers\SuperAdmin\SuperAdminAccountController;
+use App\Http\Controllers\SuperAdmin\SuperAdminShopAdminController;
 
-/*
-|--------------------------------------------------------------------------
-| API Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register API routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "api" middleware group. Make something great!
-|
-*/
 
 Route::prefix('customers')->group(function () {
     Route::get('/test', [CustomerAuthController::class, 'test'])->name('customers.test');
@@ -84,15 +80,20 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 
         Route::get('/feedback', [CustomerFeedbackController::class, 'index'])->name('customers.feedback');
         Route::post('/feedback/add', [CustomerFeedbackController::class, 'add'])->name('customers.feedback.add');
+        Route::delete('/feedback/{id}', [CustomerFeedbackController::class, 'delete'])->name('customers.feedback.delete');
 
         Route::get('/services/{id}', [CustomerServiceController::class, 'index'])->name('customers.services');
         Route::get('/additional-services/{id}', [CustomerAdditionalServiceController::class, 'index'])->name('customers.additional-services');
 
-        Route::put('/edit-profile', [CustomerAccountController::class, 'editProfile'])->name('customers.edit-profile');
+        Route::get('/machines/{id}', [CustomerCartController::class, 'machines'])->name('customers.machines');  
+
+        Route::post('/edit-profile', [CustomerAccountController::class, 'editProfile'])->name('customers.edit-profile');
         Route::get('/logout', [CustomerAuthController::class, 'logout'])->name('customers.logout');
     });
     Route::prefix('riders')->group(function () {
         Route::get('/index', [RiderAuthController::class, 'index'])->name('riders.index');
+
+        Route::post('/edit-profile', [RiderAccountController::class, 'editProfile'])->name('riders.edit-profile');
         Route::get('/logout', [RiderAuthController::class, 'logout'])->name('riders.logout');
     });
     Route::prefix('staffs')->group(function () {
@@ -117,9 +118,16 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
         Route::post('/inventories/add', [StaffInventoryController::class, 'add'])->name('staffs.inventories.add');
         Route::delete('/inventories/{id}', [StaffInventoryController::class, 'delete'])->name('staffs.inventories.delete');
 
+        Route::get('/selling_items', [StaffSellingItemController::class, 'index'])->name('staffs.selling_items');
+        Route::get('/selling_items/{id}', [StaffSellingItemController::class, 'single'])->name('staffs.selling_items.single');
+        Route::put('/selling_items/{id}', [StaffSellingItemController::class, 'edit'])->name('staffs.selling_items.edit');
+        Route::post('/selling_items/add', [StaffSellingItemController::class, 'add'])->name('staffs.selling_items.add');
+        Route::delete('/selling_items/{id}', [StaffSellingItemController::class, 'delete'])->name('staffs.selling_items.delete');
+
         Route::get('/services', [StaffServiceController::class, 'index'])->name('staffs.services');
         Route::get('/additional-services/{id}', [StaffAdditionalServiceController::class, 'index'])->name('staffs.additional-services');
 
+        Route::post('/edit-profile', [StaffAccountController::class, 'editProfile'])->name('staffs.edit-profile');
         Route::get('/logout', [StaffAuthController::class, 'logout'])->name('staffs.logout');
     });
     Route::prefix('shop_admins')->group(function () {
@@ -155,10 +163,16 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
         Route::put('/additional-services/{id}', [ShopAdminAdditionalServiceController::class, 'edit'])->name('shop_admins.additional-services.edit');
         Route::delete('/additional-services/{id}', [ShopAdminAdditionalServiceController::class, 'delete'])->name('shop_admins.additional-services.delete');
 
+        Route::post('/edit-profile', [ShopAdminAccountController::class, 'editProfile'])->name('shop_admins.edit-profile');
         Route::get('/logout', [ShopAdminAuthController::class, 'logout'])->name('shop_admins.logout');
     });
     Route::prefix('super_admins')->group(function () {
         Route::get('/index', [SuperAdminAuthController::class, 'index'])->name('super_admins.index');
+
+        Route::get('/shop_admins', [SuperAdminShopAdminController::class, 'index'])->name('super_admins.shop_admins.index');
+        Route::post('/shop_admins/status/{id}', [SuperAdminShopAdminController::class, 'edit_shop_admin_status'])->name('super_admins.shop_admins.edit_shop_admin_status');
+
+        Route::post('/edit-profile', [SuperAdminAccountController::class, 'editProfile'])->name('super_admins.edit-profile');
         Route::get('/logout', [SuperAdminAuthController::class, 'logout'])->name('super_admins.logout');
     });
 });

@@ -7,6 +7,7 @@ import axios from "axios";
 
 const Subscription = ({ navigation, route }) => {
   const { subscription_id } = route.params;
+  const [shopName, setShopName] = useState("");
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [address, setAddress] = useState("");
@@ -32,8 +33,9 @@ const Subscription = ({ navigation, route }) => {
     setError("");
     try {
       const response = await axios.post(
-        "http://192.168.1.2:8000/api/shop_admins/register",
+        `${"http://192.168.1.8:8000"}/api/shop_admins/register`,
         {
+          shop_name: shopName,
           first_name: firstName,
           last_name: lastName,
           address: address,
@@ -46,13 +48,13 @@ const Subscription = ({ navigation, route }) => {
         }
       );
 
-      const { token, user } = response.data.response;
+      // const { token, user } = response.data.response;
 
-      console.log(response.data.response);
-      await AsyncStorage.setItem("shopAdminToken", token);
-      await AsyncStorage.setItem("shopAdminData", JSON.stringify(user));
+      console.log(response.data.message);
+      // await AsyncStorage.setItem("shopAdminToken", token);
+      // await AsyncStorage.setItem("shopAdminData", JSON.stringify(user));
 
-      navigation.navigate("Shop Admin Tab Navigator", { screen: "Dashboard" });
+      navigation.navigate("Shop Admin Login");
     } catch (error) {
       setError("Invalid credentials");
     }
@@ -66,6 +68,12 @@ const Subscription = ({ navigation, route }) => {
         {error !== "" && (
           <Text style={[styles.description, { color: "red" }]}>{error}</Text>
         )}
+        <TextInput
+          style={styles.input}
+          placeholder="Shop name"
+          value={shopName}
+          onChangeText={(text) => setShopName(text)}
+        />
         <TextInput
           style={styles.input}
           placeholder="First name"

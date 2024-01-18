@@ -1,12 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { View, Text, TextInput, TouchableOpacity } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-// import { CheckBox } from "react-native-elements";
 import { styles } from "../../styles/Form";
 import axios from "axios";
 
 const Registration = ({ navigation }) => {
-  // const [isChecked, setIsChecked] = useState(false);
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [address, setAddress] = useState("");
@@ -15,10 +13,6 @@ const Registration = ({ navigation }) => {
   const [password, setPassword] = useState("");
   const [passwordConfirmation, setPasswordConfirmation] = useState("");
   const [error, setError] = useState("");
-
-  // const toggleCheckbox = () => {
-  //   setIsChecked(!isChecked);
-  // };
 
   useEffect(() => {
     checkToken();
@@ -35,7 +29,7 @@ const Registration = ({ navigation }) => {
     setError("");
     try {
       const response = await axios.post(
-        "http://192.168.1.2:8000/api/customers/register",
+        `${"http://192.168.1.8:8000"}/api/customers/register`,
         {
           first_name: firstName,
           last_name: lastName,
@@ -114,15 +108,6 @@ const Registration = ({ navigation }) => {
         <TouchableOpacity style={styles.inputButton} onPress={handleRegister}>
           <Text style={styles.inputButtonText}>Register</Text>
         </TouchableOpacity>
-
-        {/* <CheckBox
-          title="I agree to the Terms & Conditions"
-          checked={isChecked}
-          onPress={toggleCheckbox}
-          containerStyle={{ backgroundColor: "#f2f2f2", borderWidth: 0 }}
-          textStyle={{ color: "#000" }}
-        /> */}
-
         <Text style={styles.inputText}>
           Already have an account?{" "}
           <Text

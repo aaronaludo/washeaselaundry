@@ -14,7 +14,7 @@ const ViewAdditionalLaundryService = ({ route }) => {
         const token = await AsyncStorage.getItem("shopAdminToken");
 
         const response = await axios.get(
-          `http://192.168.1.2:8000/api/shop_admins/additional-services/${additional_service_id}`,
+          `${"http://192.168.1.8:8000"}/api/shop_admins/additional-services/${additional_service_id}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,

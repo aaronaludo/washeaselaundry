@@ -3,20 +3,24 @@ import { View, Text, TextInput, TouchableOpacity } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { styles } from "../../styles/Form";
 import axios from "axios";
+import { AirbnbRating } from "react-native-ratings";
 
 const Feedback = ({ route, navigation }) => {
   const { transaction_id } = route.params;
   const [message, setMessage] = useState("");
+  const [rating, setRating] = useState(0);
+  console.log(rating);
 
   const handleSubmit = async () => {
     try {
       const token = await AsyncStorage.getItem("customerToken");
 
       const response = await axios.post(
-        "http://192.168.1.2:8000/api/customers/feedback/add",
+        `${"http://192.168.1.8:8000"}/api/customers/feedback/add`,
         {
           message: message,
           transaction_id: transaction_id,
+          rating: rating,
         },
         {
           headers: {
@@ -24,7 +28,6 @@ const Feedback = ({ route, navigation }) => {
           },
         }
       );
-      //   console.log(response.data);
 
       navigation.navigate("User Transaction History");
     } catch (error) {
@@ -36,7 +39,13 @@ const Feedback = ({ route, navigation }) => {
     <>
       <View style={styles.container}>
         <Text style={styles.title}>Transaction Feedback</Text>
-        <Text style={styles.description}></Text>
+        <AirbnbRating
+          count={5}
+          reviews={["Terrible", "Bad", "Okay", "Good", "Great"]}
+          defaultRating={0}
+          size={30}
+          onFinishRating={(rating) => setRating(rating)}
+        />
         <TextInput
           style={styles.input}
           placeholder="Enter message"

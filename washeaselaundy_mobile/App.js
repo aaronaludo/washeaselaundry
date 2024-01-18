@@ -22,6 +22,8 @@ import UserCartHistory from "./src/screens/User/CartHistory";
 import UserTransactionItemsHistory from "./src/screens/User/TransactionItemsHistory";
 import UserFeedback from "./src/screens/User/Feedback";
 import UserGarments from "./src/screens/User/Garments";
+import UserTest from "./src/screens/User/Test";
+import UserSellingItems from "./src/screens/User/SellingItems";
 
 import RiderTabNavigator from "./src/navigator/RiderTabNavigator";
 import RiderLogin from "./src/screens/Rider/Login";
@@ -60,6 +62,10 @@ import StaffTransactions from "./src/screens/Staff/Transactions";
 import StaffViewInventory from "./src/screens/Staff/ViewInventory";
 import StaffEditInventory from "./src/screens/Staff/EditInventory";
 import StaffGarments from "./src/screens/Staff/Garments";
+import StaffSellingItems from "./src/screens/Staff/SellingItems";
+import StaffViewSellingItems from "./src/screens/Staff/ViewSellingItems";
+import StaffAddSellingItems from "./src/screens/Staff/AddSellingItems";
+import StaffEditSellingItems from "./src/screens/Staff/EditSellingItems";
 
 import ShopAdminTabNavigator from "./src/navigator/ShopAdminTabNavigator";
 import ShopAdminLogin from "./src/screens/ShopAdmin/Login";
@@ -101,6 +107,10 @@ import SuperAdminAccount from "./src/screens/SuperAdmin/Account";
 import SuperAdminChangePassword from "./src/screens/SuperAdmin/ChangePassword";
 import SuperAdminAccountInformation from "./src/screens/SuperAdmin/AccountInformation";
 import SuperAdminNotification from "./src/screens/SuperAdmin/Notification";
+import SuperAdminManage from "./src/screens/SuperAdmin/Manage";
+import SuperAdminShopAdmins from "./src/screens/SuperAdmin/ShopAdmins";
+import SuperAdminViewShopAdmins from "./src/screens/SuperAdmin/ViewShopAdmins";
+import SuperAdminEditShopAdminsStatus from "./src/screens/SuperAdmin/EditShopAdminsStatus";
 
 const Stack = createStackNavigator();
 
@@ -155,6 +165,8 @@ function AppNavigator() {
         />
         <Stack.Screen name="User Feedback" component={UserFeedback} />
         <Stack.Screen name="User Garments" component={UserGarments} />
+        <Stack.Screen name="User Test" component={UserTest} />
+        <Stack.Screen name="User Selling Items" component={UserSellingItems} />
         {/* Rider */}
         <Stack.Screen
           name="Rider Tab Navigator"
@@ -259,6 +271,22 @@ function AppNavigator() {
         <Stack.Screen
           name="Staff Edit Inventory"
           component={StaffEditInventory}
+        />
+        <Stack.Screen
+          name="Staff Selling Items"
+          component={StaffSellingItems}
+        />
+        <Stack.Screen
+          name="Staff Add Selling Items"
+          component={StaffAddSellingItems}
+        />
+        <Stack.Screen
+          name="Staff View Selling Items"
+          component={StaffViewSellingItems}
+        />
+        <Stack.Screen
+          name="Staff Edit Selling Items"
+          component={StaffEditSellingItems}
         />
         <Stack.Screen name="Staff Garments" component={StaffGarments} />
         {/* Shop Admin */}
@@ -398,6 +426,20 @@ function AppNavigator() {
         <Stack.Screen
           name="Super Admin Notification"
           component={SuperAdminNotification}
+        />
+        <Stack.Screen name="Super Admin Manage" component={SuperAdminManage} />
+        <Stack.Screen
+          name="Super Admin Shop Admins"
+          component={SuperAdminShopAdmins}
+        />
+        <Stack.Screen
+          name="Super Admin View Shop Admins"
+          component={SuperAdminViewShopAdmins}
+        />
+        {/* SuperAdminEditShopAdminsStatus */}
+        <Stack.Screen
+          name="Super Admin Edit Shop Admins Status"
+          component={SuperAdminEditShopAdminsStatus}
         />
       </Stack.Navigator>
     </NavigationContainer>

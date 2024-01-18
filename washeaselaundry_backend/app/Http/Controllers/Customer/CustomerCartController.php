@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\CartItem;
+use App\Models\Machine;
 
 class CustomerCartController extends Controller
 {
@@ -29,6 +30,9 @@ class CustomerCartController extends Controller
                 'shop_admin_id' => $cart_item->shop_admin_id,
                 'service_id' => $cart_item->service_id,
                 'additional_service_id' => $cart_item->additional_service_id,
+                'machine_id' => $cart_item->machine_id,
+                'machine' => $cart_item->machine,
+                'machine_status' => $cart_item->machine_id === null ? null : $cart_item->machine->status,
                 'name' => $cart_item->name,
                 'quantity' => $cart_item->quantity,
                 'weight' => $cart_item->weight,
@@ -70,10 +74,17 @@ class CustomerCartController extends Controller
         $cart_item->service_id = $request->service_id;
         $cart_item->additional_service_id = $request->additional_service_id;
         $cart_item->garment_id = $request->garment_id;
+        $cart_item->machine_id = $request->machine_id;
         $cart_item->name = $request->name;
         $cart_item->quantity = $request->quantity;
         $cart_item->weight = $request->weight;
         $cart_item->save();
+
+        if($cart_item->machine_id){
+            $machine = Machine::find($cart_item->machine_id);
+            $machine->status_id = 9;
+            $machine->save();
+        }
 
         return response()->json(['message' => 'Successfully add cart items ' . $cart_item->id]);
     }
@@ -90,5 +101,17 @@ class CustomerCartController extends Controller
         $cart_item->delete();
 
         return response()->json(['message' => 'Successfully deleted']);
+    }
+
+    public function machines($id){
+        $user = User::find(auth()->user()->id);
+
+        if ($user->role_id != 1) {
+            return response()->json(['message' => 'Customer account only'], 401);
+        }
+
+        $machines = Machine::where('shop_admin_id', $id)->get();
+
+        return response()->json(['machines' => $machines]);
     }
 }

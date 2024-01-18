@@ -8,6 +8,7 @@ const Login = ({ navigation }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  console.log(process.env.EXPO_PUBLIC_WASHEASE_URL);
 
   useEffect(() => {
     checkToken();
@@ -20,45 +21,11 @@ const Login = ({ navigation }) => {
     }
   };
 
-  // const handleLogin = async () => {
-  //   setError("");
-  //   try {
-  //     const response = await axios.post(
-  //       "http://localhost:8000/api/riders/login",
-  //       {
-  //         email,
-  //         password,
-  //       },
-  //       {
-  //         headers: {
-  //           "Content-Type": "application/x-www-form-urlencoded",
-  //           Accept: "application/json",
-  //         },
-  //       }
-  //     );
-
-  //     const { token, user } = response.data.response;
-
-  //     await AsyncStorage.setItem("riderToken", token);
-  //     await AsyncStorage.setItem("riderData", JSON.stringify(user));
-
-  //     setEmail("");
-  //     setPassword("");
-  //     navigation.navigate("Rider Tab Navigator", { screen: "Dashboard" });
-  //   } catch (error) {
-  //     setEmail("");
-  //     setPassword("");
-  //     console.error("Login error:", error);
-  //     setError(error.response.data.message);
-  //   }
-  // };
-
   const handleLogin = () => {
     setError("");
-
     axios
       .post(
-        "http://192.168.1.2:8000/api/riders/login",
+        `${"http://192.168.1.8:8000"}/api/riders/login`,
         {
           email,
           password,

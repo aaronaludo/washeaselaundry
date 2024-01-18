@@ -44,6 +44,7 @@ class UsersTableSeeder extends Seeder
         ]);
         User::create([
             'role_id' => 4,
+            'shop_name' => "Wash Ease Laundry",
             'first_name' => 'Shop Admin',
             'last_name' => 'Test',
             'address' => 'Rizal',

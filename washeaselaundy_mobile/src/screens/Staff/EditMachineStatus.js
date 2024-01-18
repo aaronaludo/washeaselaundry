@@ -6,25 +6,20 @@ import axios from "axios";
 import DropDownPicker from "react-native-dropdown-picker";
 
 const EditTransactionItem = ({ route, navigation }) => {
-  const { machine_id } = route.params;
-  const [status, setStatus] = useState("");
+  const { machine_id, transaction_id, machine_status_id } = route.params;
+  const [status, setStatus] = useState(machine_status_id);
   const [open, setOpen] = useState(false);
   const [items, setItems] = useState([
-    { label: "Pending", value: "1" },
-    { label: "Processing", value: "2" },
-    { label: "Ready to Pickup", value: "3" },
-    { label: "Delivered", value: "4" },
-    { label: "Cancelled", value: "5" },
-    { label: "Successful", value: "6" },
+    { label: "Available", value: 7 },
+    { label: "Not Available", value: 8 },
   ]);
 
-  // console.log(machine_id);
   const handleEdit = async () => {
     try {
       const token = await AsyncStorage.getItem("staffToken");
 
       const response = await axios.put(
-        `http://192.168.1.2:8000/api/staffs/transactions/edit_machine_status/${machine_id}`,
+        `${"http://192.168.1.8:8000"}/api/staffs/transactions/edit_machine_status/${machine_id}`,
         {
           status_id: status,
         },
@@ -34,9 +29,11 @@ const EditTransactionItem = ({ route, navigation }) => {
           },
         }
       );
-
-      // console.log(response);
-      navigation.navigate("Staff Tab Navigator");
+      console.log(response.data);
+      navigation.navigate("Staff View Transaction", {
+        transaction_id: transaction_id,
+        result: response.data.message,
+      });
     } catch (error) {
       console.log(error);
     }

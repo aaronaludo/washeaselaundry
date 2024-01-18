@@ -79,7 +79,8 @@ class CustomerAuthController extends Controller
         $user = Auth::user();
 
         if ($user->role_id === 1) {
-            $request->user()->tokens()->delete();
+            // $request->user()->tokens()->delete();
+            $request->user()->tokens()->where('id', $request->user()->currentAccessToken()->id)->delete();
             return response()->json(['message' => 'Successfully logged out']);
         }
 

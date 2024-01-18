@@ -23,6 +23,7 @@ return new class extends Migration
             $table->string('time');
             $table->string('special_instruction')->nullable();
             $table->string('payment_screenshot')->nullable();
+            $table->integer('total_price');
             $table->timestamps();
         });
     }

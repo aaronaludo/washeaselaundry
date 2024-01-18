@@ -16,7 +16,7 @@ return new class extends Migration
             $table->integer('shop_admin_id');
             $table->integer('machine_type_id');
             $table->string('name');
-            // $table->integer('status_id');
+            $table->integer('status_id');
             $table->timestamps();
         });
     }

@@ -23,6 +23,7 @@ class ShopAdminAuthController extends Controller
 
     public function register(Request $request){
         $request->validate([
+            'shop_name' => 'required|string',
             'first_name' => 'required|string',
             'last_name' => 'required|string',
             'address' => 'required|string',
@@ -35,6 +36,7 @@ class ShopAdminAuthController extends Controller
 
         $user = new User();
         $user->role_id = 4;
+        $user->shop_name = $request->shop_name;
         $user->first_name = $request->first_name;
         $user->last_name = $request->last_name;
         $user->address = $request->address;
@@ -50,14 +52,9 @@ class ShopAdminAuthController extends Controller
         $shop_admin_subscription->payment_screenshot = $request->payment_screenshot;
         $shop_admin_subscription->save();
 
-        $token = $user->createToken('shop_admin_washeaselaundry_token')->plainTextToken;
+        // $token = $user->createToken('shop_admin_washeaselaundry_token')->plainTextToken;
 
-        $response = [
-            'token' => $token,
-            'user' => $user
-        ];
-
-        return response()->json(['response' => $response]);
+        return response()->json(['message' => 'Registered successfully']);
     }
 
     public function login(Request $request){
@@ -66,7 +63,7 @@ class ShopAdminAuthController extends Controller
         if (Auth::attempt($credentials)) {
             $user = Auth::user();
 
-            if ($user->role_id === 4) {
+            if ($user->role_id === 4 && $user->subscription->status_id === 6) {
                 $token = $user->createToken('shop_admin_washeaselaundry_token')->plainTextToken;
                 $response = [
                     'token' => $token,
@@ -74,12 +71,9 @@ class ShopAdminAuthController extends Controller
                 ];
 
                 return response()->json(['response' => $response]);
-                // if(Carbon::parse(now())->gt(Carbon::parse($user->subscription->created_at))){
-                //     $token = $user->createToken('shop_admin_washeaselaundry_token')->plainTextToken;
-                //     return response()->json(['token' => $token]);
-                // }else{
-                //     return response()->json(['message' => 'Shop Admin subscription expired'], 401);
-                // }
+            }else if($user->role_id === 4 && $user->subscription->status_id === 1){
+                $request->user()->tokens()->delete();
+                return response()->json(['message' => 'Your account is not approved yet'], 401);
             }
 
             $request->user()->tokens()->delete();
@@ -94,7 +88,8 @@ class ShopAdminAuthController extends Controller
         $user = Auth::user();
 
         if ($user->role_id === 4) {
-            $request->user()->tokens()->delete();
+            // $request->user()->tokens()->delete();
+            $request->user()->tokens()->where('id', $request->user()->currentAccessToken()->id)->delete();
             return response()->json(['message' => 'Successfully logged out']);
         }
 

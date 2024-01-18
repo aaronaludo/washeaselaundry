@@ -35,6 +35,7 @@ class StaffTransactionController extends Controller
                 'time' => $transaction->time,
                 'special_instruction' => $transaction->special_instruction,
                 'payment_screenshot' => $transaction->payment_screenshot,
+                'total_price' => $transaction->total_price,
                 'items' => $transaction->items,
                 'created_at' => $transaction->created_at,
                 'updated_at' => $transaction->updated_at,
@@ -89,6 +90,7 @@ class StaffTransactionController extends Controller
             'time' => $transaction->time,
             'special_instruction' => $transaction->special_instruction,
             'payment_screenshot' => $transaction->payment_screenshot,
+            'total_price' => $transaction->total_price,
             'items' => $modifiedItems,
             'created_at' => $transaction->created_at,
             'updated_at' => $transaction->updated_at,
@@ -144,6 +146,7 @@ class StaffTransactionController extends Controller
         $transaction->time = $request->time;
         $transaction->special_instruction = $request->special_instruction;
         $transaction->payment_screenshot = $request->payment_screenshot;
+        $transaction->total_price = $request->total_price;
         $transaction->save();
 
         $cart_items = CartItem::where('customer_id', $user->id)->where('shop_admin_id', $transaction->shop_admin_id)->get();
@@ -292,6 +295,6 @@ class StaffTransactionController extends Controller
         $machine->status_id = $request->status_id;
         $machine->save();
 
-        return response()->json(['message' => 'Successfully edited '. $machine->id]);
+        return response()->json(['message' => 'Successfully edited '. $machine->id . $machine->status_id]);
     }
 }

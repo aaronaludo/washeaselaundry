@@ -2,6 +2,7 @@ import React from "react";
 import { Text, TouchableOpacity, Image } from "react-native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import Dashboard from "../screens/SuperAdmin/Dashboard";
+import Manage from "../screens/SuperAdmin/Manage";
 import Notification from "../screens/SuperAdmin/Notification";
 import { Feather } from "@expo/vector-icons";
 
@@ -21,7 +22,7 @@ export default function App({ navigation }) {
         ),
         headerLeft: () => (
           <TouchableOpacity
-            onPress={() => navigation.navigate("Rider Account")}
+            onPress={() => navigation.navigate("Super Admin Account")}
             style={{ marginLeft: 15 }}
           >
             <Image
@@ -44,6 +45,19 @@ export default function App({ navigation }) {
           tabBarIcon: ({ color, size, focused }) => (
             <Feather
               name="home"
+              size={24}
+              color={focused ? "#0d6efd" : "grey"}
+            />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="Manage"
+        component={Manage}
+        options={{
+          tabBarIcon: ({ color, size, focused }) => (
+            <Feather
+              name="columns"
               size={24}
               color={focused ? "#0d6efd" : "grey"}
             />

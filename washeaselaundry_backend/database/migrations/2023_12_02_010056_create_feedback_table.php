@@ -16,6 +16,7 @@ return new class extends Migration
             $table->integer('customer_id');
             $table->integer('transaction_id');
             $table->string('message');
+            $table->integer('rating');
             $table->timestamps();
         });
     }

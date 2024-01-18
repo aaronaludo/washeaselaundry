@@ -5,6 +5,36 @@ import axios from "axios";
 import { Feather } from "@expo/vector-icons";
 
 export default function Account({ navigation }) {
+  const [userData, setUserData] = useState({
+    id: null,
+    first_name: "",
+    last_name: "",
+    email: "",
+    phone_number: "",
+    address: "",
+    image: "",
+    role_id: null,
+    status_id: null,
+    created_at: null,
+    updated_at: null,
+  });
+
+  useEffect(() => {
+    getUserData();
+  }, []);
+
+  const getUserData = async () => {
+    try {
+      const storedUserData = await AsyncStorage.getItem("customerData");
+      if (storedUserData) {
+        const parsedUserData = JSON.parse(storedUserData);
+        setUserData(parsedUserData);
+      }
+    } catch (error) {
+      console.error("Error retrieving user data:", error);
+    }
+  };
+
   const handleLogout = async () => {
     // await AsyncStorage.removeItem("customerToken");
     // await AsyncStorage.removeItem("customerData");
@@ -13,7 +43,7 @@ export default function Account({ navigation }) {
       const token = await AsyncStorage.getItem("customerToken");
       if (token) {
         const response = await axios.get(
-          "http://192.168.1.2:8000/api/customers/logout",
+          `${"http://192.168.1.8:8000"}/api/customers/logout`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -38,11 +68,17 @@ export default function Account({ navigation }) {
   return (
     <View style={styles.container}>
       <View style={styles.imageContainer}>
-        <Image
-          source={require("../../../assets/images/profile.jpg")}
-          style={styles.image}
-        />
-        <Text style={styles.title}>User</Text>
+        {userData.image !== null ? (
+          <Image
+            source={{
+              uri: `${"http://192.168.1.8:8000"}/storage/${userData.image}`,
+            }}
+            style={styles.image}
+          />
+        ) : null}
+        <Text
+          style={styles.title}
+        >{`${userData.first_name} ${userData.last_name}`}</Text>
       </View>
       <View style={styles.buttonsContainer}>
         <TouchableOpacity

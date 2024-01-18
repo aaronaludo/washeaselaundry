@@ -23,7 +23,7 @@ const Staffs = ({ navigation, route }) => {
         const token = await AsyncStorage.getItem("shopAdminToken");
 
         const response = await axios.get(
-          "http://192.168.1.2:8000/api/shop_admins/staffs",
+          `${"http://192.168.1.8:8000"}/api/shop_admins/staffs`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -46,7 +46,7 @@ const Staffs = ({ navigation, route }) => {
       const token = await AsyncStorage.getItem("shopAdminToken");
 
       const response = await axios.delete(
-        `http://192.168.1.2:8000/api/shop_admins/staffs/${id}`,
+        `${"http://192.168.1.8:8000"}/api/shop_admins/staffs/${id}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,

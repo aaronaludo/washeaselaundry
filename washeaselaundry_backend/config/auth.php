@@ -40,6 +40,26 @@ return [
             'driver' => 'session',
             'provider' => 'users',
         ],
+        'customer' => [
+            'driver' => 'session',
+            'provider' => 'customers',
+        ],
+        'rider' => [
+            'driver' => 'session',
+            'provider' => 'riders',
+        ],
+        'shopadmin' => [
+            'driver' => 'session',
+            'provider' => 'shopadmins',
+        ],
+        'staff' => [
+            'driver' => 'session',
+            'provider' => 'staffs',
+        ],
+        'superadmin' => [
+            'driver' => 'session',
+            'provider' => 'superadmins',
+        ],
     ],
 
     /*
@@ -64,11 +84,26 @@ return [
             'driver' => 'eloquent',
             'model' => App\Models\User::class,
         ],
-
-        // 'users' => [
-        //     'driver' => 'database',
-        //     'table' => 'users',
-        // ],
+        'customers' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\User::class,
+        ],
+        'riders' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\User::class,
+        ],
+        'shopadmins' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\User::class,
+        ],
+        'staffs' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\User::class,
+        ],
+        'superadmins' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\User::class,
+        ],
     ],
 
     /*

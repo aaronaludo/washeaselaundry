@@ -16,7 +16,7 @@ const Feedback = ({ route, navigation }) => {
       const token = await AsyncStorage.getItem("customerToken");
 
       const response = await axios.post(
-        `${"http://192.168.1.8:8000"}/api/customers/feedback/add`,
+        `${"http://192.168.1.5:8000"}/api/customers/feedback/add`,
         {
           message: message,
           transaction_id: transaction_id,

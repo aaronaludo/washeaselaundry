@@ -15,7 +15,7 @@ const EditSellingItems = ({ navigation, route }) => {
       const token = await AsyncStorage.getItem("staffToken");
 
       const response = await axios.put(
-        `${"http://192.168.1.8:8000"}/api/staffs/selling_items/${
+        `${"http://192.168.1.5:8000"}/api/staffs/selling_items/${
           sellingItem.id
         }`,
         {

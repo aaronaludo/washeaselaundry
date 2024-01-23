@@ -48,7 +48,7 @@ const Checkout = ({ route, navigation }) => {
       const token = await AsyncStorage.getItem("staffToken");
 
       const response = await axios.post(
-        `${"http://192.168.1.8:8000"}/api/staffs/transactions/add`,
+        `${"http://192.168.1.5:8000"}/api/staffs/transactions/add`,
         {
           shop_admin_id: shop_admin_id,
           name: name,

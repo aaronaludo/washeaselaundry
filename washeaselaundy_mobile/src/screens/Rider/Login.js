@@ -25,7 +25,7 @@ const Login = ({ navigation }) => {
     setError("");
     axios
       .post(
-        `${"http://192.168.1.8:8000"}/api/riders/login`,
+        `${"http://192.168.1.5:8000"}/api/riders/login`,
         {
           email,
           password,

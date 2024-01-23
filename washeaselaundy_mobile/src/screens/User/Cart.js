@@ -41,7 +41,7 @@ const Cart = ({ route, navigation }) => {
         const token = await AsyncStorage.getItem("customerToken");
 
         const response = await axios.get(
-          `${"http://192.168.1.8:8000"}/api/customers/shop_admins`,
+          `${"http://192.168.1.5:8000"}/api/customers/shop_admins`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -60,7 +60,7 @@ const Cart = ({ route, navigation }) => {
         const token = await AsyncStorage.getItem("customerToken");
 
         const response = await axios.get(
-          `${"http://192.168.1.8:8000"}/api/customers/cart`,
+          `${"http://192.168.1.5:8000"}/api/customers/cart`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -87,7 +87,7 @@ const Cart = ({ route, navigation }) => {
       const token = await AsyncStorage.getItem("customerToken");
 
       const response = await axios.delete(
-        `${"http://192.168.1.8:8000"}/api/customers/cart/${id}`,
+        `${"http://192.168.1.5:8000"}/api/customers/cart/${id}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,

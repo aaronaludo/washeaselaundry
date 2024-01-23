@@ -41,7 +41,7 @@ export default function Account({ navigation }) {
 
       if (token) {
         const response = await axios.get(
-          `${"http://192.168.1.8:8000"}/api/super_admins/logout`,
+          `${"http://192.168.1.5:8000"}/api/super_admins/logout`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -71,7 +71,7 @@ export default function Account({ navigation }) {
         {userData.image !== null ? (
           <Image
             source={{
-              uri: `${"http://192.168.1.8:8000"}/storage/${userData.image}`,
+              uri: `${"http://192.168.1.5:8000"}/storage/${userData.image}`,
             }}
             style={styles.image}
           />

@@ -53,4 +53,9 @@ class User extends Authenticatable
     public function transactions(){
         return $this->hasMany(Transaction::class, 'shop_admin_id');
     }
+
+    public function shop_admin()
+    {
+        return $this->hasOne(User::class, 'id', 'shop_admin_id');
+    }
 }

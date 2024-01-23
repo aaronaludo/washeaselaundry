@@ -22,7 +22,7 @@ const ShopAdmins = ({ navigation, route }) => {
         const token = await AsyncStorage.getItem("superAdminToken");
 
         const response = await axios.get(
-          `${"http://192.168.1.8:8000"}/api/super_admins/shop_admins`,
+          `${"http://192.168.1.5:8000"}/api/super_admins/shop_admins`,
           {
             headers: {
               Authorization: `Bearer ${token}`,

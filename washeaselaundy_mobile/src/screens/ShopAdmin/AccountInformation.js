@@ -81,7 +81,7 @@ const AccountInformation = ({ navigation }) => {
         });
       }
 
-      const apiEndpoint = `${"http://192.168.1.8:8000"}/api/shop_admins/edit-profile`;
+      const apiEndpoint = `${"http://192.168.1.5:8000"}/api/shop_admins/edit-profile`;
       const token = await AsyncStorage.getItem("shopAdminToken");
 
       const response = await axios.post(apiEndpoint, formData, {

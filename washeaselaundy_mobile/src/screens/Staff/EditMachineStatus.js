@@ -19,7 +19,7 @@ const EditTransactionItem = ({ route, navigation }) => {
       const token = await AsyncStorage.getItem("staffToken");
 
       const response = await axios.put(
-        `${"http://192.168.1.8:8000"}/api/staffs/transactions/edit_machine_status/${machine_id}`,
+        `${"http://192.168.1.5:8000"}/api/staffs/transactions/edit_machine_status/${machine_id}`,
         {
           status_id: status,
         },

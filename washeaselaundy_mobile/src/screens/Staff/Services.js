@@ -14,7 +14,7 @@ const Dashboard = ({ route, navigation }) => {
         const token = await AsyncStorage.getItem("staffToken");
 
         const response = await axios.get(
-          `${"http://192.168.1.8:8000"}/api/staffs/services`,
+          `${"http://192.168.1.5:8000"}/api/staffs/services`,
           {
             headers: {
               Authorization: `Bearer ${token}`,

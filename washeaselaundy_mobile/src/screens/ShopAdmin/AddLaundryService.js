@@ -16,7 +16,7 @@ const AddLaundryService = ({ navigation }) => {
       const token = await AsyncStorage.getItem("shopAdminToken");
 
       const response = await axios.post(
-        `${"http://192.168.1.8:8000"}/api/shop_admins/services/add`,
+        `${"http://192.168.1.5:8000"}/api/shop_admins/services/add`,
         {
           name: name,
           description: description,

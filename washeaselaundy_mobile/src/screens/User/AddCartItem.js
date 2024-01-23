@@ -49,7 +49,7 @@ const AddCartItems = ({ route, navigation }) => {
         const token = await AsyncStorage.getItem("customerToken");
 
         const response = await axios.get(
-          `${"http://192.168.1.8:8000"}/api/customers/machines/${shop_admin_id}`,
+          `${"http://192.168.1.5:8000"}/api/customers/machines/${shop_admin_id}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -77,7 +77,7 @@ const AddCartItems = ({ route, navigation }) => {
       const token = await AsyncStorage.getItem("customerToken");
 
       const response = await axios.post(
-        `${"http://192.168.1.8:8000"}/api/customers/cart/add`,
+        `${"http://192.168.1.5:8000"}/api/customers/cart/add`,
         {
           name: name,
           quantity: quantity,

@@ -15,9 +15,11 @@ class SubscriptionsTableSeeder extends Seeder
     {
         Subscription::create([
             'name' => '1 Month',
+            'price' => 10
         ]); 
         Subscription::create([
             'name' => '1 Year',
+            'price' => 20
         ]); 
     }
 }

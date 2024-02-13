@@ -1,17 +1,12 @@
-@extends('layouts.staff')
-@section('title', 'Staff - Selling Items')
+@extends('layouts.customer')
+@section('title', 'Customer - Transactions')
 
 @section('content')
     <div class="container-fluid">
         <div class="row">
             <div class="col-lg-12 d-flex justify-content-between">
                 <div>
-                    <h2 class="title">Selling Items</h2>
-                </div>
-                <div class="d-flex align-items-center">
-                    <a class="btn btn-primary" href="{{ route('staffs.selling-items.add') }}">
-                        <i class="fa-solid fa-user"></i>&nbsp;&nbsp;&nbsp;Add Selling Items
-                    </a>
+                    <h2 class="title">Transactions</h2>
                 </div>
             </div>
             <div class="col-lg-12 mb-20">
@@ -54,11 +49,11 @@
                                             <td>
                                                 <div class="d-flex">
                                                     <div class="action-button">
-                                                        <a href="{{ route('staffs.selling-items.view', 1) }}" title="View">
+                                                        <a href="#" title="View">
                                                             <i class="fa-solid fa-eye"></i>
                                                         </a>
                                                     </div>
-                                                    <div class="action-button"><a href="{{ route('staffs.selling-items.edit', 1) }}" title="Edit"><i class="fa-solid fa-pencil"></i></a></div>
+                                                    <div class="action-button"><a href="#" title="Edit"><i class="fa-solid fa-pencil"></i></a></div>
                                                     <div class="action-button">
                                                         <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#delete-modal-1" title="Delete">
                                                             <i class="fa-solid fa-trash color-red"></i>
@@ -75,7 +70,7 @@
                                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                                     </div>
                                                     <div class="modal-body">
-                                                        Are you sure you want to delete selling item 1?
+                                                        Are you sure you want to delete transaction 1?
                                                     </div>
                                                     <div class="modal-footer">
                                                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>

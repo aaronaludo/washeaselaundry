@@ -14,10 +14,9 @@ return new class extends Migration
         Schema::create('inventories', function (Blueprint $table) {
             $table->id();
             $table->integer('shop_admin_id');
-            $table->integer('transaction_id');
+            $table->string('image');
             $table->string('name');
             $table->string('quantity');
-            $table->string('type');
             $table->timestamps();
         });
     }

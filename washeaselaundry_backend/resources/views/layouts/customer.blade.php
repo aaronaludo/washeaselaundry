@@ -25,9 +25,10 @@
                 <ul class="navbar-nav">
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            <img src="{{ asset('assets/images/profile-45x45.png') }}" alt="User" title="User" class="round" /> {{ auth()->guard('customer')->user()->first_name }} {{ auth()->guard('customer')->user()->last_name }}
+                            <img src="{{ route('image', ['imageName' => auth()->guard('customer')->user()->image == '' ? 'hey' : auth()->guard('customer')->user()->image]) }}" alt="Image" title="User" class="round" height="50" width="50"/> {{ auth()->guard('customer')->user()->first_name }} {{ auth()->guard('customer')->user()->last_name }}
                         </a>
                         <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownMenuLink">
+                            <li><a class="dropdown-item" href="#">Cart</a></li>
                             <li><a class="dropdown-item" href="{{ route('customers.account.edit-profile') }}">Edit Profile</a></li>
                             <li><a class="dropdown-item" href="{{ route('customers.account.change-password') }}">Change Password</a></li>
                             <li>
@@ -44,11 +45,8 @@
         <nav id="column-left">
             <ul id="menu">
                 <li><a href="{{ route('customers.dashboard.index') }}"><i class="fa-solid fa-gauge"></i> Dashboard</a></li>
-                {{-- <li><a href="#"><i class="fa-solid fa-users"></i> Users</a></li> --}}
-                {{-- <li><a href="#"><i class="fa-solid fa-users"></i> Admins</a></li> --}}
-                {{-- <li><a href="#"><i class="fa-solid fa-car"></i> Ride Histories</a></li> --}}
-                {{-- <li><a href="{{ route('admin.reports.index') }}"><i class="fa-solid fa-chart-simple"></i> Reports</a></li> --}}
-                {{-- <li><a href="{{ route('admin.settings.index') }}"><i class="fa-solid fa-gear"></i> Settings</a></li> --}}
+                <li><a href="{{ route('customers.laundry-shops.index') }}"><i class="fa-solid fa-gauge"></i> Laundry Shops</a></li>
+                <li><a href="{{ route('customers.transactions.index') }}"><i class="fa-solid fa-gauge"></i> Transactions</a></li>
             </ul>
         </nav>
         <div id="content">

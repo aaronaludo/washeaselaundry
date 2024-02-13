@@ -1,5 +1,5 @@
-@extends('layouts.staff')
-@section('title', 'Staff - View')
+@extends('layouts.shopadmin')
+@section('title', 'Shop Admin - View')
 
 @section('content')
     <div class="container-fluid">
@@ -9,7 +9,8 @@
             </div>
             <div class="col-lg-12">
                 <div class="alert alert-primary">
-                    <p>Name: <span class="fw-semibold ms-3">Test</span></p>
+                    <p>Name: <span class="fw-semibold ms-3">{{ $transaction_mode->name }}</span></p>
+                    <p>Price: <span class="fw-semibold ms-3">{{ $transaction_mode->price }}</span></p>
                 </div>
             </div>                    
         </div>

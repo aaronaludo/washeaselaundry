@@ -23,6 +23,14 @@ class RiderAccountController extends Controller
         $user->address = $request->address;
         $user->phone_number = $request->phone_number;
         $user->email = $request->email;
+
+        if ($request->hasFile('image')) {
+            $image = $request->file('image');
+            $imageName = time() . '.' . $image->getClientOriginalExtension();
+            $path = $image->storeAs('uploads', $imageName, 'public');
+            $user->image = $path;
+        }
+        
         $user->save();
 
         return redirect('/riders/edit-profile')->with('success', 'Profile updated successfully');

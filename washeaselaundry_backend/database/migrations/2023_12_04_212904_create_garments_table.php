@@ -13,8 +13,10 @@ return new class extends Migration
     {
         Schema::create('garments', function (Blueprint $table) {
             $table->id();
+            $table->integer('shop_admin_id');
             $table->string('name');
             $table->text('description');
+            $table->string('price');
         });
     }
 

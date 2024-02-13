@@ -25,7 +25,7 @@
                 <ul class="navbar-nav">
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            <img src="{{ asset('assets/images/profile-45x45.png') }}" alt="User" title="User" class="round" /> {{ auth()->guard('shopadmin')->user()->first_name }} {{ auth()->guard('shopadmin')->user()->last_name }} ({{ auth()->guard('shopadmin')->user()->shop_name }})
+                            <img src="{{ route('image', ['imageName' => auth()->guard('shopadmin')->user()->image == '' ? 'hey' : auth()->guard('shopadmin')->user()->image]) }}" alt="Image" title="User" class="round" height="50" width="50"/> {{ auth()->guard('shopadmin')->user()->first_name }} {{ auth()->guard('shopadmin')->user()->last_name }} ({{ auth()->guard('shopadmin')->user()->shop_name }})
                         </a>
                         <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownMenuLink">
                             <li><a class="dropdown-item" href="{{ route('shop_admins.account.edit-profile') }}">Edit Profile</a></li>
@@ -47,6 +47,8 @@
                 <li><a href="{{ route('shop_admins.staffs.index') }}"><i class="fa-solid fa-users"></i> Staffs</a></li>
                 <li><a href="{{ route('shop_admins.riders.index') }}"><i class="fa-solid fa-motorcycle"></i> Riders</a></li>
                 <li><a href="{{ route('shop_admins.machines.index') }}"><i class="fa-solid fa-window-maximize"></i> Machines</a></li>
+                <li><a href="{{ route('shop_admins.transaction-modes.index') }}"><i class="fa-solid fa-window-maximize"></i> Transaction Modes</a></li>
+                <li><a href="{{ route('shop_admins.garments.index') }}"><i class="fa-solid fa-shirt"></i> Garments</a></li>
                 <li><a href="{{ route('shop_admins.laundry-services.index') }}"><i class="fa-solid fa-square"></i> Laundry Services</a></li>
                 <li><a href="{{ route('shop_admins.additional-laundry-services.index') }}"><i class="fa-solid fa-splotch"></i> Additional Laundry Services</a></li>
             </ul>

@@ -25,7 +25,7 @@
                 <ul class="navbar-nav">
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            <img src="{{ asset('assets/images/profile-45x45.png') }}" alt="User" title="User" class="round" /> {{ auth()->guard('superadmin')->user()->first_name }} {{ auth()->guard('superadmin')->user()->last_name }} (Admin)
+                            <img src="{{ route('image', ['imageName' => auth()->guard('superadmin')->user()->image == '' ? 'hey' : auth()->guard('superadmin')->user()->image]) }}" alt="Image" title="User" class="round" height="50" width="50"/> {{ auth()->guard('superadmin')->user()->first_name }} {{ auth()->guard('superadmin')->user()->last_name }}
                         </a>
                         <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownMenuLink">
                             <li><a class="dropdown-item" href="{{ route('super_admins.account.edit-profile') }}">Edit Profile</a></li>
@@ -49,6 +49,7 @@
                 <li><a href="{{ route('super_admins.riders.index') }}"><i class="fa-solid fa-motorcycle"></i> Riders</a></li>
                 <li><a href="{{ route('super_admins.shop-admins.index') }}"><i class="fa-solid fa-users"></i> Shop Admins</a></li>
                 <li><a href="{{ route('super_admins.super-admins.index') }}"><i class="fa-solid fa-users"></i> Super Admins</a></li>
+                <li><a href="{{ route('super_admins.subscriptions.index') }}"><i class="fa-solid fa-money-bill"></i> Subscriptions</a></li>
             </ul>
         </nav>
         <div id="content">

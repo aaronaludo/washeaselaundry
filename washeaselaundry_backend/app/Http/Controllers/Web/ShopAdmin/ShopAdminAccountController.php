@@ -18,11 +18,20 @@ class ShopAdminAccountController extends Controller
     }
     public function processEditProfile(Request $request){
         $user = User::find(auth()->guard('shopadmin')->user()->id);
+        $user->shop_name = $request->shop_name;
         $user->first_name = $request->first_name;
         $user->last_name = $request->last_name;
         $user->address = $request->address;
         $user->phone_number = $request->phone_number;
         $user->email = $request->email;
+
+        if ($request->hasFile('image')) {
+            $image = $request->file('image');
+            $imageName = time() . '.' . $image->getClientOriginalExtension();
+            $path = $image->storeAs('uploads', $imageName, 'public');
+            $user->image = $path;
+        }
+        
         $user->save();
 
         return redirect('/shop_admins/edit-profile')->with('success', 'Profile updated successfully');

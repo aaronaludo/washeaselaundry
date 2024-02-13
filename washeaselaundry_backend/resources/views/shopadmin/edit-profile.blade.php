@@ -16,8 +16,20 @@
                     @endif
                     <div class="row">
                         <div class="col-lg-12">
-                            <form method="post" action="{{ route('shop_admins.process.account.edit-profile') }}">
+                            <form action="{{ route('shop_admins.process.account.edit-profile') }}" method="post" enctype="multipart/form-data">
                                 @csrf
+                                <div class="mb-3 row">
+                                    <label for="image" class="col-sm-12 col-lg-2 col-form-label">Image: <span class="required">*</span></label>
+                                    <div class="col-lg-10 col-sm-12 d-flex align-items-center">
+                                        <input type="file" class="form-control" id="image" name="image"/>
+                                    </div>
+                                </div>
+                                <div class="mb-3 row">
+                                    <label for="shop_name" class="col-sm-12 col-lg-2 col-form-label">Shop name: <span class="required">*</span></label>
+                                    <div class="col-lg-10 col-sm-12 d-flex align-items-center">
+                                        <input type="text" class="form-control" id="shop_name" name="shop_name" value="{{ auth()->guard('shopadmin')->user()->shop_name }}"/>
+                                    </div>
+                                </div>
                                 <div class="mb-3 row">
                                     <label for="first_name" class="col-sm-12 col-lg-2 col-form-label">First name: <span class="required">*</span></label>
                                     <div class="col-lg-10 col-sm-12 d-flex align-items-center">

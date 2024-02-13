@@ -6,8 +6,9 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Subscription;
-use Illuminate\Support\Facades\Validator;
 use App\Models\User;
+use App\Models\ShopAdminSubscription;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
 
 class ShopAdminAuthController extends Controller
@@ -34,6 +35,7 @@ class ShopAdminAuthController extends Controller
     }
     public function processRegister(Request $request, $id){
         $validator = Validator::make($request->all(), [
+            'screesnhot' => 'required',
             'shop_name' => 'required',
             'first_name' => 'required',
             'last_name' => 'required',
@@ -60,6 +62,20 @@ class ShopAdminAuthController extends Controller
         $user->password = Hash::make($request->password);
         $user->save();
 
+        $shopAdminSubscription = new ShopAdminSubscription();
+        $shopAdminSubscription->shop_admin_id = $user->id;
+        $shopAdminSubscription->subscription_id = $request->subscription_id;
+        $shopAdminSubscription->status_id = 1;
+        
+        if ($request->hasFile('screesnhot')) {
+            $image = $request->file('screesnhot');
+            $imageName = time() . '.' . $image->getClientOriginalExtension();
+            $path = $image->storeAs('uploads', $imageName, 'public');
+            $shopAdminSubscription->payment_screenshot = $path;
+        }
+
+        $shopAdminSubscription->save();
+
         return redirect()->route('shop_admins.login')->with('success', 'Shop Admin created successfully');
     }
     public function processLogin(Request $request){
@@ -68,8 +84,14 @@ class ShopAdminAuthController extends Controller
         if (Auth::guard('shopadmin')->attempt($credentials)) {
             $user = Auth::guard('shopadmin')->user();
             
-            if ($user->role_id === 4) {
+            if ($user->role_id === 4 && $user->subscription->status_id === 6) {
                 return redirect()->intended('/shop_admins/dashboard');
+            }else if($user->subscription->status_id === 1){
+                Auth::guard('shopadmin')->logout();
+                return redirect()->route('shop_admins.login')->with('error', 'Your account is pending');
+            }else if($user->subscription->status_id === 10){
+                Auth::guard('shopadmin')->logout();
+                return redirect()->route('shop_admins.login')->with('error', 'Your account is failed');
             }
     
             Auth::guard('shopadmin')->logout();

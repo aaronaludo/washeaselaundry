@@ -15,11 +15,15 @@ class GarmentsTableSeeder extends Seeder
     {
         Garment::create([
             'name' => 'Regular Clothes',
+            'shop_admin_id' => 4,
             'description' => "Lorem ipsum dolor sit amet consectetur adipisicing elit. Officiis explicabo nobis veniam dicta iure saepe odio pariatur nemo delectus modi!",
+            'price' => '99'
         ]);
         Garment::create([
             'name' => 'Maong Pants & Thick Jacket',
+            'shop_admin_id' => 4,
             'description' => "Lorem ipsum dolor sit amet consectetur adipisicing elit. Officiis explicabo nobis veniam dicta iure saepe odio pariatur nemo delectus modi!",
+            'price' => '99'
         ]);
     }
 }

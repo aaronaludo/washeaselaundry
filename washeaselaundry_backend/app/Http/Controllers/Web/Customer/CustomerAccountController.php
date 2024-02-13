@@ -23,6 +23,14 @@ class CustomerAccountController extends Controller
         $user->address = $request->address;
         $user->phone_number = $request->phone_number;
         $user->email = $request->email;
+        
+        if ($request->hasFile('image')) {
+            $image = $request->file('image');
+            $imageName = time() . '.' . $image->getClientOriginalExtension();
+            $path = $image->storeAs('uploads', $imageName, 'public');
+            $user->image = $path;
+        }
+
         $user->save();
 
         return redirect('/customers/edit-profile')->with('success', 'Profile updated successfully');
@@ -49,5 +57,16 @@ class CustomerAccountController extends Controller
         $user->save();
 
         return redirect('/customers/change-password')->with('success', 'Password changed successfully');
+    }
+
+    public function getImage($imageName){
+        
+        $path = storage_path($imageName);
+
+        if (file_exists($path)) {
+            return response()->file($path);
+        }
+        
+        return response()->file(storage_path('default.jpg'));
     }
 }

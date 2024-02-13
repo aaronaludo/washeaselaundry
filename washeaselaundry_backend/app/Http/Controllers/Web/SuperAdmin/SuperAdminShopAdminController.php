@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Web\SuperAdmin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\ShopAdminSubscription;
 
 class SuperAdminShopAdminController extends Controller
 {
@@ -37,5 +38,13 @@ class SuperAdminShopAdminController extends Controller
         $shop_admin->delete();
 
         return redirect()->route("super_admins.shop-admins.index")->with('danger', 'Shop Admins delete successfully');
+    }
+    public function processStatus(Request $request, $id){
+        $subscription = ShopAdminSubscription::where('shop_admin_id', $id)->first();
+
+        $subscription->status_id = $request->status_id;
+        $subscription->save();
+
+        return redirect()->route("super_admins.shop-admins.view", $id);
     }
 }

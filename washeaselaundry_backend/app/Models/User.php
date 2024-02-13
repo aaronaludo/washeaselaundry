@@ -45,17 +45,22 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
-
     public function subscription(){
         return $this->hasOne(ShopAdminSubscription::class, 'shop_admin_id')->orderBy('id', 'desc');
     }
-
     public function transactions(){
         return $this->hasMany(Transaction::class, 'shop_admin_id');
     }
-
-    public function shop_admin()
-    {
+    public function shop_admin(){
         return $this->hasOne(User::class, 'id', 'shop_admin_id');
+    }
+    public function services(){
+        return $this->hasMany(Service::class, 'shop_admin_id');
+    }
+    public function transaction_modes(){
+        return $this->hasMany(TransactionMode::class, 'shop_admin_id');
+    }
+    public function garments(){
+        return $this->hasMany(Garment::class, 'shop_admin_id');
     }
 }

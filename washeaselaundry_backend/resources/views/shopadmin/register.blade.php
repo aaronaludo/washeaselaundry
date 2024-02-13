@@ -37,7 +37,7 @@
             <div class="col-lg-12 d-flex justify-content-center">
               <div class="col-lg-7x col-sm-10 col-12 col-md-8 mt-5">
                 <div id="login-container">
-                  <h2>Register: <span>{{ $subscription->name }}</span></h2>
+                  <h2>Register: <span>{{ $subscription->name }} </span><span style="font-size: 20px" class="text-secondary">({{ $subscription->price }} pesos)</span></h2>
                     @if ($errors->any())
                         <div class="alert alert-danger">
                             <ul>
@@ -47,8 +47,18 @@
                             </ul>
                         </div>
                     @endif
-                  <form action="{{ route('shop_admins.process.register', $subscription->id) }}" method="post">
+                  <form action="{{ route('shop_admins.process.register', $subscription->id) }}" method="post" enctype="multipart/form-data">
                     @csrf
+                    <input type="hidden" name="subscription_id" value="{{ $subscription->id }}">
+                    <div class="input-group mb-3 mt-4">
+                      <span class="input-group-text"
+                          >Payment Screenshot: </span>
+                      <input
+                          type="file"
+                          class="form-control"
+                          name="screesnhot"
+                      />
+                    </div>
                     <div class="input-group mb-3 mt-4">
                       <span class="input-group-text"
                           ><i class="fa-solid fa-user"></i
@@ -59,7 +69,7 @@
                           placeholder="Shop name"
                           name="shop_name"
                       />
-                  </div>
+                    </div>
                     <div class="input-group mb-3 mt-4">
                         <span class="input-group-text"
                             ><i class="fa-solid fa-user"></i

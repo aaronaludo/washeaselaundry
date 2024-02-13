@@ -9,7 +9,9 @@
             </div>
             <div class="col-lg-12">
                 <div class="alert alert-primary">
-                    <p>Name: <span class="fw-semibold ms-3">Test</span></p>
+                    <p>Name: <span class="fw-semibold ms-3">{{ $inventory->name }}</span></p>
+                    <p>Quantity: <span class="fw-semibold ms-3">{{ $inventory->quantity }}</span></p>
+                    <p>Image: <span class="fw-semibold ms-3"><img src="{{ route('image', ['imageName' => $inventory->image == '' ? 'hey' : $inventory->image]) }}" alt="Image" title="Image" width="400" class="rounded"/></span></p>
                 </div>
             </div>                    
         </div>

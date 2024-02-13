@@ -25,7 +25,7 @@
                 <ul class="navbar-nav">
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            <img src="{{ asset('assets/images/profile-45x45.png') }}" alt="User" title="User" class="round" /> {{ auth()->guard('staff')->user()->first_name }} {{ auth()->guard('staff')->user()->last_name }}
+                            <img src="{{ route('image', ['imageName' => auth()->guard('staff')->user()->image == '' ? 'hey' : auth()->guard('staff')->user()->image]) }}" alt="Image" title="User" class="round" height="50" width="50"/> {{ auth()->guard('staff')->user()->first_name }} {{ auth()->guard('staff')->user()->last_name }}
                         </a>
                         <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownMenuLink">
                             <li><a class="dropdown-item" href="{{ route('staffs.account.edit-profile') }}">Edit Profile</a></li>
@@ -46,7 +46,6 @@
                 <li><a href="{{ route('staffs.dashboard.index') }}"><i class="fa-solid fa-gauge"></i> Dashboard</a></li>
                 <li><a href="{{ route('staffs.transactions.index') }}"><i class="fa-solid fa-users"></i> Transactions</a></li>
                 <li><a href="{{ route('staffs.inventories.index') }}"><i class="fa-solid fa-users"></i> Inventories</a></li>
-                <li><a href="{{ route('staffs.selling-items.index') }}"><i class="fa-solid fa-users"></i> Selling Items</a></li>
             </ul>
         </nav>
         <div id="content">

@@ -2,9 +2,14 @@
 
 use Illuminate\Support\Facades\Route;
 
+use App\Http\Controllers\LandingPageController;
+
 use App\Http\Controllers\Web\Customer\CustomerAuthController;
 use App\Http\Controllers\Web\Customer\CustomerAccountController;
 use App\Http\Controllers\Web\Customer\CustomerDashboardController;
+use App\Http\Controllers\Web\Customer\CustomerLaundryShopController;
+use App\Http\Controllers\Web\Customer\CustomerTransactionController;
+use App\Http\Controllers\Web\Customer\CustomerCartController;
 
 use App\Http\Controllers\Web\Rider\RiderAuthController;
 use App\Http\Controllers\Web\Rider\RiderAccountController;
@@ -19,6 +24,7 @@ use App\Http\Controllers\Web\SuperAdmin\SuperAdminCustomerController;
 use App\Http\Controllers\Web\SuperAdmin\SuperAdminStaffController;
 use App\Http\Controllers\Web\SuperAdmin\SuperAdminRiderController;
 use App\Http\Controllers\Web\SuperAdmin\SuperAdminSuperAdminController;
+use App\Http\Controllers\Web\SuperAdmin\SuperAdminSubscriptionController;
 
 use App\Http\Controllers\Web\Staff\StaffAuthController;
 use App\Http\Controllers\Web\Staff\StaffAccountController;
@@ -30,12 +36,19 @@ use App\Http\Controllers\Web\Staff\StaffSellingItemController;
 use App\Http\Controllers\Web\ShopAdmin\ShopAdminAuthController;
 use App\Http\Controllers\Web\ShopAdmin\ShopAdminAccountController;
 use App\Http\Controllers\Web\ShopAdmin\ShopAdminDashboardController;
-
 use App\Http\Controllers\Web\ShopAdmin\ShopAdminRiderController;
 use App\Http\Controllers\Web\ShopAdmin\ShopAdminStaffController;
 use App\Http\Controllers\Web\ShopAdmin\ShopAdminMachineController;
+use App\Http\Controllers\Web\ShopAdmin\ShopAdminTransactionModeController;
+use App\Http\Controllers\Web\ShopAdmin\ShopAdminGarmentController;
 use App\Http\Controllers\Web\ShopAdmin\ShopAdminLaundryServiceController;
 use App\Http\Controllers\Web\ShopAdmin\ShopAdminAdditionalLaundryServiceController;
+
+Route::get('/', [LandingPageController::class, 'index'])->name('index');
+Route::get('/services', [LandingPageController::class, 'services'])->name('services');
+Route::get('/contact', [LandingPageController::class, 'contact'])->name('contact');
+
+Route::get('/storage/{imageName}', [CustomerAccountController::class, 'getImage'])->name('image');
 
 Route::prefix('customers')->group(function () {
     Route::get('/login', [CustomerAuthController::class, 'login'])->name('customers.login');
@@ -49,6 +62,18 @@ Route::prefix('customers')->group(function () {
         Route::get('/change-password', [CustomerAccountController::class, 'changePassword'])->name('customers.account.change-password');
         Route::post('/edit-profile', [CustomerAccountController::class, 'processEditProfile'])->name('customers.process.account.edit-profile');
         Route::post('/change-password', [CustomerAccountController::class, 'processChangePassword'])->name('customers.process.account.change-password');
+
+        Route::get('/laundry-shops', [CustomerLaundryShopController::class, 'index'])->name('customers.laundry-shops.index');
+        Route::get('/laundry-shops/{id}', [CustomerLaundryShopController::class, 'transactionModes'])->name('customers.laundry-shops.transaction-modes');
+        Route::get('/laundry-shops/{id}/{transaction_id}', [CustomerLaundryShopController::class, 'services'])->name('customers.laundry-shops.services');
+        Route::get('/laundry-shops/{id}/services/{service_id}', [CustomerLaundryShopController::class, 'additionalServices'])->name('customers.laundry-shops.additional-services');
+        Route::get('/laundry-shops/{id}/services/{service_id}/garments', [CustomerLaundryShopController::class, 'garments'])->name('customers.laundry-shops.garments');
+
+        Route::get('/transactions', [CustomerTransactionController::class, 'index'])->name('customers.transactions.index');
+        Route::get('/transactions/{id}', [CustomerTransactionController::class, 'view'])->name('customers.transactions.view');
+
+        Route::get('/cart', [CustomerCartController::class, 'index'])->name('customers.cart.index');
+
         Route::post('/logout', [CustomerAuthController::class, 'logout'])->name('customers.logout');
     });
 });
@@ -89,15 +114,14 @@ Route::prefix('staffs')->group(function () {
         Route::get('/transactions/{id}', [StaffTransactionController::class, 'view'])->name('staffs.transactions.view');
         Route::get('/transactions/edit/{id}', [StaffTransactionController::class, 'edit'])->name('staffs.transactions.edit');
 
-        Route::get('/selling-items', [StaffSellingItemController::class, 'index'])->name('staffs.selling-items.index');
-        Route::get('/selling-items/add', [StaffSellingItemController::class, 'add'])->name('staffs.selling-items.add');
-        Route::get('/selling-items/{id}', [StaffSellingItemController::class, 'view'])->name('staffs.selling-items.view');
-        Route::get('/selling-items/edit/{id}', [StaffSellingItemController::class, 'edit'])->name('staffs.selling-items.edit');
-
         Route::get('/inventories', [StaffInventoryController::class, 'index'])->name('staffs.inventories.index');
         Route::get('/inventories/add', [StaffInventoryController::class, 'add'])->name('staffs.inventories.add');
-        Route::get('/inventories/{id}', [StaffInventoryController::class, 'view'])->name('staffs.inventories.view');
         Route::get('/inventories/edit/{id}', [StaffInventoryController::class, 'edit'])->name('staffs.inventories.edit');
+        Route::get('/inventories/search', [StaffInventoryController::class, 'search'])->name('staffs.inventories.search');
+        Route::get('/inventories/{id}', [StaffInventoryController::class, 'view'])->name('staffs.inventories.view');
+        Route::post('/inventories/add', [StaffInventoryController::class, 'processAdd'])->name('staffs.inventories.process.add');
+        Route::delete('/inventories/{id}', [StaffInventoryController::class, 'processDelete'])->name('staffs.inventories.process.delete');
+        Route::put('/inventories/{id}', [StaffInventoryController::class, 'processEdit'])->name('staffs.inventories.process.edit');
 
         Route::post('/logout', [StaffAuthController::class, 'logout'])->name('staffs.logout');
     });
@@ -143,6 +167,24 @@ Route::prefix('shop_admins')->group(function () {
         Route::post('/machines/add', [ShopAdminMachineController::class, 'processAdd'])->name('shop_admins.machines.process.add');
         Route::delete('/machines/{id}', [ShopAdminMachineController::class, 'processDelete'])->name('shop_admins.machines.process.delete');
         Route::put('/machines/{id}', [ShopAdminMachineController::class, 'processEdit'])->name('shop_admins.machines.process.edit');
+
+        Route::get('/garments', [ShopAdminGarmentController::class, 'index'])->name('shop_admins.garments.index');
+        Route::get('/garments/add', [ShopAdminGarmentController::class, 'add'])->name('shop_admins.garments.add');
+        Route::get('/garments/edit/{id}', [ShopAdminGarmentController::class, 'edit'])->name('shop_admins.garments.edit');
+        Route::get('/garments/search', [ShopAdminGarmentController::class, 'search'])->name('shop_admins.garments.search');
+        Route::get('/garments/{id}', [ShopAdminGarmentController::class, 'view'])->name('shop_admins.garments.view');
+        Route::post('/garments/add', [ShopAdminGarmentController::class, 'processAdd'])->name('shop_admins.garments.process.add');
+        Route::delete('/garments/{id}', [ShopAdminGarmentController::class, 'processDelete'])->name('shop_admins.garments.process.delete');
+        Route::put('/garments/{id}', [ShopAdminGarmentController::class, 'processEdit'])->name('shop_admins.garments.process.edit');
+
+        Route::get('/transaction-modes', [ShopAdminTransactionModeController::class, 'index'])->name('shop_admins.transaction-modes.index');
+        Route::get('/transaction-modes/add', [ShopAdminTransactionModeController::class, 'add'])->name('shop_admins.transaction-modes.add');
+        Route::get('/transaction-modes/edit/{id}', [ShopAdminTransactionModeController::class, 'edit'])->name('shop_admins.transaction-modes.edit');
+        Route::get('/transaction-modes/search', [ShopAdminTransactionModeController::class, 'search'])->name('shop_admins.transaction-modes.search');
+        Route::get('/transaction-modes/{id}', [ShopAdminTransactionModeController::class, 'view'])->name('shop_admins.transaction-modes.view');
+        Route::post('/transaction-modes/add', [ShopAdminTransactionModeController::class, 'processAdd'])->name('shop_admins.transaction-modes.process.add');
+        Route::delete('/transaction-modes/{id}', [ShopAdminTransactionModeController::class, 'processDelete'])->name('shop_admins.transaction-modes.process.delete');
+        Route::put('/transaction-modes/{id}', [ShopAdminTransactionModeController::class, 'processEdit'])->name('shop_admins.transaction-modes.process.edit');
 
         Route::get('/laundry-services', [ShopAdminLaundryServiceController::class, 'index'])->name('shop_admins.laundry-services.index');
         Route::get('/laundry-services/add', [ShopAdminLaundryServiceController::class, 'add'])->name('shop_admins.laundry-services.add');
@@ -196,6 +238,7 @@ Route::prefix('super_admins')->group(function () {
         Route::get('/shop-admins/search', [SuperAdminShopAdminController::class, 'search'])->name('super_admins.shop-admins.search');
         Route::get('/shop-admins/{id}', [SuperAdminShopAdminController::class, 'view'])->name('super_admins.shop-admins.view');
         Route::delete('/shop-admins/{id}', [SuperAdminShopAdminController::class, 'processDelete'])->name('super_admins.shop-admins.process.delete');
+        Route::put('/shop-admins/{id}', [SuperAdminShopAdminController::class, 'processStatus'])->name('super_admins.shop-admins.process.status');
 
         Route::get('/super-admins', [SuperAdminSuperAdminController::class, 'index'])->name('super_admins.super-admins.index');
         Route::get('/super-admins/add', [SuperAdminSuperAdminController::class, 'add'])->name('super_admins.super-admins.add');
@@ -205,6 +248,15 @@ Route::prefix('super_admins')->group(function () {
         Route::post('/super-admins/add', [SuperAdminSuperAdminController::class, 'processAdd'])->name('super_admins.super-admins.process.add');
         Route::delete('/super-admins/{id}', [SuperAdminSuperAdminController::class, 'processDelete'])->name('super_admins.super-admins.process.delete');
         Route::put('/super-admins/{id}', [SuperAdminSuperAdminController::class, 'processEdit'])->name('super_admins.super-admins.process.edit');
+
+        Route::get('/subscriptions', [SuperAdminSubscriptionController::class, 'index'])->name('super_admins.subscriptions.index');
+        Route::get('/subscriptions/add', [SuperAdminSubscriptionController::class, 'add'])->name('super_admins.subscriptions.add');
+        Route::get('/subscriptions/edit/{id}', [SuperAdminSubscriptionController::class, 'edit'])->name('super_admins.subscriptions.edit');
+        Route::get('/subscriptions/search', [SuperAdminSubscriptionController::class, 'search'])->name('super_admins.subscriptions.search');
+        Route::get('/subscriptions/{id}', [SuperAdminSubscriptionController::class, 'view'])->name('super_admins.subscriptions.view');
+        Route::post('/subscriptions/add', [SuperAdminSubscriptionController::class, 'processAdd'])->name('super_admins.subscriptions.process.add');
+        Route::delete('/subscriptions/{id}', [SuperAdminSubscriptionController::class, 'processDelete'])->name('super_admins.subscriptions.process.delete');
+        Route::put('/subscriptions/{id}', [SuperAdminSubscriptionController::class, 'processEdit'])->name('super_admins.subscriptions.process.edit');
 
         Route::post('/logout', [SuperAdminAuthController::class, 'logout'])->name('super_admins.logout');
     });

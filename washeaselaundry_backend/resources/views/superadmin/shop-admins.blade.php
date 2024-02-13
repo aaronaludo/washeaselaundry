@@ -48,6 +48,7 @@
                                         <th>First name</th>
                                         <th>Last name</th>
                                         <th>Email</th>
+                                        <th>Status</th>
                                         <th>Date created</th>
                                         <th>Actions</th>
                                     </thead>
@@ -59,6 +60,7 @@
                                                 <td>{{ $shop_admin->first_name }}</td>
                                                 <td>{{ $shop_admin->last_name }}</td>
                                                 <td>{{ $shop_admin->email }}</td>
+                                                <td>{{ $shop_admin->subscription->status->name }}</td>
                                                 <td>{{ \Carbon\Carbon::parse($shop_admin->created_at)->format('F j, Y g:i a') }}</td>
                                                 <td>
                                                     <div class="d-flex">

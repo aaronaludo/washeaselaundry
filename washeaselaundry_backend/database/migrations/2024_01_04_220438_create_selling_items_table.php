@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('image');
             $table->integer('shop_admin_id');
             $table->string('name');
-            $table->integer('price');
+            $table->string('price');
             $table->integer('quantity');
             $table->timestamps();
         });

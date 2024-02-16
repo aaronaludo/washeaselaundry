@@ -14,7 +14,7 @@ const AddSellingItems = ({ navigation }) => {
       const token = await AsyncStorage.getItem("staffToken");
 
       const response = await axios.post(
-        `${"http://192.168.1.5:8000"}/api/staffs/selling_items/add`,
+        `${"http://192.168.1.12:8000"}/api/staffs/selling_items/add`,
         {
           name: name,
           quantity: quantity,

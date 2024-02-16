@@ -36,7 +36,7 @@ const EditTransactionItem = ({ route, navigation }) => {
         const token = await AsyncStorage.getItem("staffToken");
 
         const response = await axios.get(
-          `${"http://192.168.1.5:8000"}/api/staffs/transactions/machines`,
+          `${"http://192.168.1.12:8000"}/api/staffs/transactions/machines`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -59,7 +59,7 @@ const EditTransactionItem = ({ route, navigation }) => {
         const token = await AsyncStorage.getItem("staffToken");
 
         const response = await axios.get(
-          `${"http://192.168.1.5:8000"}/api/staffs/transactions/item/${transaction_item_id}`,
+          `${"http://192.168.1.12:8000"}/api/staffs/transactions/item/${transaction_item_id}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -83,7 +83,7 @@ const EditTransactionItem = ({ route, navigation }) => {
       const token = await AsyncStorage.getItem("staffToken");
 
       const response = await axios.put(
-        `${"http://192.168.1.5:8000"}/api/staffs/transactions/item/${transaction_item_id}`,
+        `${"http://192.168.1.12:8000"}/api/staffs/transactions/item/${transaction_item_id}`,
         {
           machine_id: machine,
           status_id: status,

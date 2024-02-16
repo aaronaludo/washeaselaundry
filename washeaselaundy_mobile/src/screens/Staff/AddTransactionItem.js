@@ -36,7 +36,7 @@ const AddTransactionItem = ({ route, navigation }) => {
       const token = await AsyncStorage.getItem("staffToken");
 
       const response = await axios.post(
-        `${"http://192.168.1.5:8000"}/api/staffs/cart/add`,
+        `${"http://192.168.1.12:8000"}/api/staffs/cart/add`,
         {
           name: name,
           quantity: quantity,

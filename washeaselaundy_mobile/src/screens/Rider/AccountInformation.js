@@ -81,7 +81,7 @@ const AccountInformation = ({ navigation }) => {
         });
       }
 
-      const apiEndpoint = `${"http://192.168.1.5:8000"}/api/riders/edit-profile`;
+      const apiEndpoint = `${"http://192.168.1.12:8000"}/api/riders/edit-profile`;
       const token = await AsyncStorage.getItem("riderToken");
 
       const response = await axios.post(apiEndpoint, formData, {

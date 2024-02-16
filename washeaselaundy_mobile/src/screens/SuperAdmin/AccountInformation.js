@@ -81,7 +81,7 @@ const AccountInformation = ({ navigation }) => {
         });
       }
 
-      const apiEndpoint = `${"http://192.168.1.5:8000"}/api/super_admins/edit-profile`;
+      const apiEndpoint = `${"http://192.168.1.12:8000"}/api/super_admins/edit-profile`;
       const token = await AsyncStorage.getItem("superAdminToken");
 
       const response = await axios.post(apiEndpoint, formData, {

@@ -16,7 +16,7 @@ const EditInventory = ({ navigation, route }) => {
         const token = await AsyncStorage.getItem("staffToken");
 
         const response = await axios.get(
-          `${"http://192.168.1.5:8000"}/api/staffs/inventories/${inventory_id}`,
+          `${"http://192.168.1.12:8000"}/api/staffs/inventories/${inventory_id}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -40,7 +40,7 @@ const EditInventory = ({ navigation, route }) => {
       const token = await AsyncStorage.getItem("staffToken");
 
       const response = await axios.put(
-        `${"http://192.168.1.5:8000"}/api/staffs/inventories/${inventory_id}`,
+        `${"http://192.168.1.12:8000"}/api/staffs/inventories/${inventory_id}`,
         {
           name: name,
           quantity: quantity,

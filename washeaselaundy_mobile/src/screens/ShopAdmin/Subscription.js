@@ -33,7 +33,7 @@ const Subscription = ({ navigation, route }) => {
     setError("");
     try {
       const response = await axios.post(
-        `${"http://192.168.1.5:8000"}/api/shop_admins/register`,
+        `${"http://192.168.1.12:8000"}/api/shop_admins/register`,
         {
           shop_name: shopName,
           first_name: firstName,

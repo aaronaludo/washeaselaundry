@@ -22,7 +22,7 @@ const ViewTransaction = ({ route, navigation }) => {
         const token = await AsyncStorage.getItem("staffToken");
 
         const response = await axios.get(
-          `${"http://192.168.1.5:8000"}/api/staffs/transactions/${transaction_id}`,
+          `${"http://192.168.1.12:8000"}/api/staffs/transactions/${transaction_id}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,

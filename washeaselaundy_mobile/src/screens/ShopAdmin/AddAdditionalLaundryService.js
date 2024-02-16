@@ -20,7 +20,7 @@ const AddAdditionalLaundryService = ({ navigation }) => {
         const token = await AsyncStorage.getItem("shopAdminToken");
 
         const response = await axios.get(
-          `${"http://192.168.1.5:8000"}/api/shop_admins/services`,
+          `${"http://192.168.1.12:8000"}/api/shop_admins/services`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -48,7 +48,7 @@ const AddAdditionalLaundryService = ({ navigation }) => {
       const token = await AsyncStorage.getItem("shopAdminToken");
 
       const response = await axios.post(
-        `${"http://192.168.1.5:8000"}/api/shop_admins/additional-services/add`,
+        `${"http://192.168.1.12:8000"}/api/shop_admins/additional-services/add`,
         {
           name: name,
           description: description,

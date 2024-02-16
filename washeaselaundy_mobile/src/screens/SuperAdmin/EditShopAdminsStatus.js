@@ -20,7 +20,7 @@ const EditShopAdminsStatus = ({ route, navigation }) => {
       const token = await AsyncStorage.getItem("superAdminToken");
 
       const response = await axios.post(
-        `${"http://192.168.1.5:8000"}/api/super_admins/shop_admins/status/${
+        `${"http://192.168.1.12:8000"}/api/super_admins/shop_admins/status/${
           shop_admin.id
         }`,
         {

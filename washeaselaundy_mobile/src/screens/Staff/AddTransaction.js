@@ -63,7 +63,7 @@ const AddTransaction = ({ route, navigation }) => {
         const token = await AsyncStorage.getItem("staffToken");
 
         const response = await axios.get(
-          `${"http://192.168.1.5:8000"}/api/staffs/cart`,
+          `${"http://192.168.1.12:8000"}/api/staffs/cart`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -89,7 +89,7 @@ const AddTransaction = ({ route, navigation }) => {
       const token = await AsyncStorage.getItem("staffToken");
 
       const response = await axios.delete(
-        `${"http://192.168.1.5:8000"}/api/staffs/cart/${id}`,
+        `${"http://192.168.1.12:8000"}/api/staffs/cart/${id}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,

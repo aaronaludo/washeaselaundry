@@ -20,7 +20,7 @@ const AddStaff = ({ navigation }) => {
       const token = await AsyncStorage.getItem("shopAdminToken");
 
       const response = await axios.post(
-        `${"http://192.168.1.5:8000"}/api/shop_admins/staffs/add`,
+        `${"http://192.168.1.12:8000"}/api/shop_admins/staffs/add`,
         {
           first_name: firstName,
           last_name: lastName,

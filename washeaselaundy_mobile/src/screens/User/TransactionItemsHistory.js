@@ -23,7 +23,7 @@ const TransactionItemsHistory = ({ route }) => {
         const token = await AsyncStorage.getItem("customerToken");
 
         const response = await axios.get(
-          `${"http://192.168.1.5:8000"}/api/customers/transactions/${transaction_id}`,
+          `${"http://192.168.1.12:8000"}/api/customers/transactions/${transaction_id}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -57,7 +57,7 @@ const TransactionItemsHistory = ({ route }) => {
       const token = await AsyncStorage.getItem("customerToken");
 
       const response = await axios.delete(
-        `${"http://192.168.1.5:8000"}/api/customers/feedback/${id}`,
+        `${"http://192.168.1.12:8000"}/api/customers/feedback/${id}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,

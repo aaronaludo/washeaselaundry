@@ -24,7 +24,7 @@ const Login = ({ navigation }) => {
     setError("");
     try {
       const response = await axios.post(
-        `${"http://192.168.1.5:8000"}/api/staffs/login`,
+        `${"http://192.168.1.12:8000"}/api/staffs/login`,
         {
           email,
           password,
